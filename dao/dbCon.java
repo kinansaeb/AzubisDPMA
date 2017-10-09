@@ -17,7 +17,7 @@ import java.util.Properties;
 
 public class dbCon {
 
-	public static void main(String[] argv) {
+	public static Connection getConnection() {
 		System.out.println("--- Oracle JDBC Connection Test");
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -25,7 +25,7 @@ public class dbCon {
 		} catch (ClassNotFoundException e) {
 			System.out.println("No Oracle Driver found...");
 			e.printStackTrace();
-			return;
+			return null;
 		}
 		System.out.println("Oracle JDBC Driver Registered!");
 		Connection connection = null;
@@ -35,7 +35,7 @@ public class dbCon {
 		} catch (SQLException e) {
 			System.out.println("Connection Failed! Check console output.");
 			e.printStackTrace();
-			return;
+			return null;
 		}
 		if (connection != null) {
 			System.out.println("Database connection established!");
@@ -44,6 +44,7 @@ public class dbCon {
 			
 		System.out.println("Failed to create Database connection!");
 		}
+		return connection;
 	}
 
 }

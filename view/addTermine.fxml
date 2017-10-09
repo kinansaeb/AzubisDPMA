@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="414.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.dpma.azubidpma.view.addTermineController">
+   <children>
+      <ComboBox fx:id="name" layoutX="14.0" layoutY="38.0" prefWidth="150.0" />
+      <Text layoutX="15.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Benutzer" />
+      <TextField fx:id="referat" layoutX="185.0" layoutY="38.0" prefHeight="31.0" prefWidth="47.0" />
+      <Text layoutX="185.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Referat" />
+      <ComboBox fx:id="kategorie1" layoutX="261.0" layoutY="38.0" prefHeight="31.0" prefWidth="218.0" />
+      <DatePicker fx:id="von" layoutX="14.0" layoutY="105.0" AnchorPane.bottomAnchor="278.0" AnchorPane.leftAnchor="14.0" />
+      <DatePicker fx:id="bis" layoutX="261.0" layoutY="105.0" AnchorPane.bottomAnchor="278.0" />
+      <Text layoutX="14.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Von" />
+      <Text layoutX="263.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bis" />
+      <Text layoutX="261.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kategorie" />
+      <Text layoutX="13.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kommentar" />
+      <TextArea fx:id="kommentar" layoutX="8.0" layoutY="200.0" prefHeight="149.0" prefWidth="583.0" />
+      <Line endX="600.0" layoutX="81.0" layoutY="164.0" startX="-100.0" />
+      <Button layoutX="20.0" layoutY="368.0" mnemonicParsing="false" text="Speichern" />
+      <Button layoutX="130.0" layoutY="368.0" mnemonicParsing="false" onAction="#abortButton" text="Abbrechen" />
+   </children>
+</AnchorPane>

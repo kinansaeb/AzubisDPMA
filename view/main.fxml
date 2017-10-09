@@ -10,6 +10,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="459.0" prefWidth="729.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.dpma.azubidpma.view.mainController">
@@ -25,7 +26,7 @@
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                  <children>
                                     <Button layoutX="17.0" layoutY="263.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="190.0" text="Suchen" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="13.0" />
-                                    <Button layoutX="16.0" layoutY="302.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="190.0" text="Termin anlegen" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="13.0" />
+                                    <Button layoutX="16.0" layoutY="302.0" mnemonicParsing="false" onAction="#addTermineButton" prefHeight="31.0" prefWidth="190.0" text="Termin anlegen" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="13.0" />
                                     <TextField fx:id="terminSuchfeld" layoutX="18.0" layoutY="28.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="13.0" />
                                     <ComboBox fx:id="ausbildungsjahrT" layoutX="16.0" layoutY="69.0" prefHeight="31.0" prefWidth="191.0" promptText="Ausbildungsjahr" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="13.0" />
                                     <ComboBox fx:id="berufsbildT" layoutX="17.0" layoutY="108.0" prefHeight="31.0" prefWidth="189.0" promptText="Berufsbild" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="13.0" />
@@ -93,6 +94,27 @@
                   </AnchorPane>
             </content>
           </Tab>
+            <Tab text="Einstellungen">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Text layoutX="18.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Datenbank Adresse ändern" />
+                        <TextField layoutX="18.0" layoutY="82.0" prefHeight="31.0" prefWidth="415.0" AnchorPane.rightAnchor="304.0" />
+                        <Button layoutX="455.0" layoutY="152.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="224.0" text="Speichern &amp; Aktualiseren" AnchorPane.leftAnchor="452.0" AnchorPane.rightAnchor="55.0" />
+                        <Text layoutX="18.0" layoutY="139.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nutzername" />
+                        <Text layoutX="163.0" layoutY="138.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Passwort" />
+                        <TextField layoutX="18.0" layoutY="152.0" prefHeight="31.0" prefWidth="126.0" />
+                        <Text layoutX="18.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Datenbank Hostname" />
+                        <Text layoutX="306.0" layoutY="138.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Port" />
+                        <TextField layoutX="163.0" layoutY="152.0" opacity="0.25" prefHeight="31.0" prefWidth="126.0" />
+                        <TextField layoutX="306.0" layoutY="152.0" prefHeight="31.0" prefWidth="126.0" />
+                        <TextField layoutX="452.0" layoutY="82.0" prefHeight="31.0" prefWidth="230.0" AnchorPane.leftAnchor="452.0" AnchorPane.rightAnchor="55.0" />
+                        <Text layoutX="452.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Service-ID" />
+                        <Line endX="100.0" layoutX="107.0" layoutY="35.0" startX="-100.0" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
         </tabs>
       </TabPane>
    </children>

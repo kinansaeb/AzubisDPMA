@@ -10,15 +10,15 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="258.0" prefWidth="427.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.dpma.azubidpma.view.addUserController">
    <children>
       <TextField fx:id="vorname" layoutX="14.0" layoutY="45.0" />
-      <Button layoutX="14.0" layoutY="200.0" mnemonicParsing="false" onAction="#saveButton" prefHeight="31.0" prefWidth="187.0" text="Speichern..." />
-      <ComboBox fx:id="ausbildungsjahr" layoutX="14.0" layoutY="127.0" prefHeight="31.0" prefWidth="187.0" />
-      <Text layoutX="14.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Vorname" />
       <TextField fx:id="nachname" layoutX="226.0" layoutY="45.0" />
+      <ComboBox fx:id="ausbildungsjahr" layoutX="14.0" layoutY="127.0" prefHeight="31.0" prefWidth="187.0" />
+      <ComboBox fx:id="berufsbild" layoutX="222.0" layoutY="127.0" prefHeight="31.0" prefWidth="187.0" />
+      <Button layoutX="14.0" layoutY="200.0" mnemonicParsing="false" onAction="#saveButton" prefHeight="31.0" prefWidth="187.0" text="Speichern..." />
+      <Text layoutX="14.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Vorname" />
       <Text layoutX="225.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nachname" />
       <Text layoutX="14.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ausbildungsjahr" />
-      <ComboBox fx:id="berufsbild" layoutX="222.0" layoutY="127.0" prefHeight="31.0" prefWidth="187.0" />
       <Text layoutX="228.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Berufsbild" />
       <Button layoutX="222.0" layoutY="200.0" mnemonicParsing="false" onAction="#abortButton" prefHeight="31.0" prefWidth="187.0" text="Abbrechen" />
-      <Line endX="427.0" layoutX="108.0" layoutY="175.0" startX="-150.0" />
+      <Line endX="427.0" layoutX="108.0" layoutY="175.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
    </children>
 </AnchorPane>

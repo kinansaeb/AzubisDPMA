@@ -10,8 +10,8 @@ import java.util.List;
 import de.dpma.azubidpma.model.Benutzer;
 
 public class UsersDAO {
-final String SELECT_ALL_USERS = "SELECT * FROM ROOT.BENUTZER"; // <---- Statement muss geändert werden
-final String ADD_USER = "INSERT INTO ROOT.BENUTZER (ID, NAME, BERUFSBILD, AUSBILDUNGSJAHR, KATEGORIE) VALUES(?, ?, ?, ?, ?)";
+final String SELECT_ALL_USERS = "SELECT * FROM KISAEB.BENUTZER"; // <---- Statement muss geändert werden
+final String ADD_USER = "INSERT INTO KISAEB.BENUTZER (ID, NAME, BERUFSBILD, AUSBILDUNGSJAHR) VALUES(?, ?, ?, ?)";
 
 private final Connection con;
 
@@ -27,7 +27,7 @@ public List<Benutzer> allUsers() throws SQLException {
 		Benutzer Users = new Benutzer();
 		Users.setBerufsbild(result.getString("berufsbild"));
 		Users.setAusbildungsjahr(result.getInt("ausbildungsjahr"));
-		Users.setKategorie(result.getString("kategorie"));
+	
 		Users.setId(result.getInt("id"));
 		Users.setName(result.getString("name"));
 

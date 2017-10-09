@@ -22,6 +22,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Alert.AlertType;
 
 public class mainController implements Initializable {
@@ -33,7 +34,7 @@ public class mainController implements Initializable {
 	String dbOn;
 	String dbOff;
 	
-	public static UsersDAO manageUsersDAO = new UsersDAO(azb.con.getConnection());
+	public static UsersDAO manageUsersDAO = new UsersDAO(AzubiMain.con.getConnection());
 	
 	@FXML
 	private TextField benutzerSuchfeld = new TextField();
@@ -111,6 +112,22 @@ public class mainController implements Initializable {
 	}
 		
 	}
+	@FXML
+	public void addTermineButton(ActionEvent event) {
+	log.info("addTerminButton clicked");
+	try {
+		FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("addTermine.fxml"));
+		log.info("Scene addTermine.fxml wird initialisiert");
+		Parent root = (Parent) fxmlLoader.load();
+		stage = new Stage();
+		stage.setScene(new Scene(root));
+		stage.setTitle("Neuen Termin anlegen");
+		stage.setResizable(false);
+		stage.show();
+	}catch (Exception e) {
+		e.printStackTrace();
+	}
+	}
 	public void initialize(URL location, ResourceBundle resources) {
 		berufsbild.setItems(berufsbildList);
 		ausbildungsjahr.setItems(ausbildungjahrList);
@@ -123,14 +140,14 @@ public class mainController implements Initializable {
 	ObservableList<String> berufsbildList = FXCollections.observableArrayList("IT", "KFB", "VFA", "FAMI", "Schreiner", "Elektroniker");
 	@FXML
 	public ComboBox<String> ausbildungsjahr1;
-	ObservableList<String> ausbildungjahrList = FXCollections.observableArrayList("1.", "2.", "3.", "4.");
+	ObservableList<String> ausbildungjahrList = FXCollections.observableArrayList("1", "2", "3", "4");
 
 	@FXML
 	public ComboBox<String> berufsbildT1;
 	ObservableList<String> berufsbildTList = FXCollections.observableArrayList("IT", "KFB", "VFA", "FAMI", "Schreiner", "Elektroniker");
 	@FXML
 	public ComboBox<String> ausbildungsjahrT1;
-	ObservableList<String> ausbildungjahrTList = FXCollections.observableArrayList("1.", "2.", "3.", "4.");
+	ObservableList<String> ausbildungjahrTList = FXCollections.observableArrayList("1", "2", "3", "4");
 	@FXML
 	public ComboBox<String> kategorieT1;
 	ObservableList<String> kategorieTList = FXCollections.observableArrayList("Krank", "Urlaub", "Fachbereich", "Berufschule", "Innung");

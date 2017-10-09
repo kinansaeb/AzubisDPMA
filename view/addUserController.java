@@ -1,6 +1,8 @@
 package de.dpma.azubidpma.view;
 
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
@@ -30,14 +32,14 @@ private ComboBox<String> berufsbild = new ComboBox();
 @FXML
 private ComboBox<String> ausbildungsjahr = new ComboBox();
 
-String nameVoll = (vorname + " " + nachname);
+
 
 @FXML
 public ComboBox<String> berufsbild1;
 ObservableList<String> berufsbildList = FXCollections.observableArrayList("IT", "KFB", "VFA", "FAMI", "Schreiner", "Elektroniker");
 @FXML
 public ComboBox<String> ausbildungsjahr1;
-ObservableList<String> ausbildungjahrList = FXCollections.observableArrayList("1.", "2.", "3.", "4.");
+ObservableList<String> ausbildungjahrList = FXCollections.observableArrayList("1", "2", "3", "4");
 @FXML
 public void abortButton(ActionEvent event) {
 try {
@@ -64,7 +66,13 @@ public void saveButton(ActionEvent event) {
 	user.setName(vorname.getText() + " " + nachname.getText());
 	user.setAusbildungsjahr(Integer.parseInt(ausbildungsjahr.getValue()));
 	user.setBerufsbild(berufsbild.getValue());
-//	List<Benutzer> lastUser = mainController.managerUsersDAO.allUsers();
+	try {
+		mainController.manageUsersDAO.addUser(user);
+		List<Benutzer> lastUser = mainController.manageUsersDAO.allUsers();
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
 	
 }
 }

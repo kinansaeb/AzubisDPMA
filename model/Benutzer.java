@@ -13,7 +13,7 @@ private IntegerProperty id = new SimpleIntegerProperty();
 private IntegerProperty ausbildungsjahr = new SimpleIntegerProperty();
 private StringProperty name = new SimpleStringProperty();
 private StringProperty berufsbild = new SimpleStringProperty();
-private StringProperty kategorie = new SimpleStringProperty();
+
 
 
 
@@ -22,9 +22,9 @@ public Benutzer() {
 	
 }
 
-public Benutzer(String name, String kategorie, String berufsbild, int ausbildungsjahr, int id) {
+public Benutzer(String name, String berufsbild, int ausbildungsjahr, int id) {
 	this.name = new SimpleStringProperty(name);
-	this.kategorie = new SimpleStringProperty(kategorie);
+	
 	this.berufsbild = new SimpleStringProperty(berufsbild);
 	this.ausbildungsjahr = new SimpleIntegerProperty(ausbildungsjahr);
 	this.id = new SimpleIntegerProperty(id);
@@ -73,15 +73,6 @@ public StringProperty getBerufsbild() {
 
 public void setBerufsbild(String berufsbild) {
 	this.berufsbild.set(berufsbild);
-}
-
-public StringProperty getKategorie() {
-	return kategorie;
-
-}
-
-public void setKategorie(String kategorie) {
-	this.kategorie.set(kategorie);
 }
 
 	}
