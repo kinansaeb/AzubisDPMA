@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
 import de.dpma.azubidpma.AzubiMain;
+import de.dpma.azubidpma.model.Benutzer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -36,14 +37,31 @@ ObservableList<String> berufsbildList = FXCollections.observableArrayList("IT", 
 public ComboBox<String> ausbildungsjahr1;
 ObservableList<String> ausbildungsjahrList = FXCollections.observableArrayList("1", "2", "3", "4");
 
+private Benutzer user;
+
+public Benutzer getUser() {
+	return user;
+}
+
+public void setUser(Benutzer user) {
+	this.user = user;
+}
+
+
 @FXML
 public void abbortButton(ActionEvent event) {
 	((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
 }
 
+@FXML
+public void saveButton(ActionEvent event) {
+	
+}
+
 public void initialize(URL location, ResourceBundle resources) {
 	berufsbild.setItems(berufsbildList);
 	ausbildungsjahr.setItems(ausbildungsjahrList);
+	name.setUserData(user);
 	
 }
 }

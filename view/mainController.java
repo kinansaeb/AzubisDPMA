@@ -1,19 +1,21 @@
 package de.dpma.azubidpma.view;
 
 import de.dpma.azubidpma.AzubiMain;
+import de.dpma.azubidpma.dao.TerminDAO;
 import de.dpma.azubidpma.dao.UsersDAO;
 import de.dpma.azubidpma.dao.dbCon;
 import de.dpma.azubidpma.model.Benutzer;
+import de.dpma.azubidpma.model.Termin;
 import de.dpma.azubidpma.*;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
-
-import org.omg.CORBA.INITIALIZE;
 
 import javafx.stage.Stage;
 import javafx.collections.FXCollections;
@@ -27,6 +29,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -38,11 +41,15 @@ public class mainController implements Initializable {
 
 	public static  dbCon con = null;
 	public static Stage stage;
-	String dbOn;
-	String dbOff;
+	
+	public String sqlImportQuery;
 	
 	public static UsersDAO manageUsersDAO = new UsersDAO(AzubiMain.con.getConnection());
-
+	public static TerminDAO manageTermineDAO = new TerminDAO(AzubiMain.con.getConnection());
+	
+	
+	@FXML
+	private TextArea importArea = new TextArea();
 	@FXML
 	private TextField del_idFeld = new TextField();
 	@FXML
@@ -62,6 +69,8 @@ public class mainController implements Initializable {
 	@FXML
 	private TableView<Benutzer> userTbl = new TableView();
 	@FXML
+	private TableView<Termin> terminTbl = new TableView();
+	@FXML
 	private TableColumn<Benutzer, String> userName = new TableColumn<Benutzer, String>();
 	@FXML
 	private TableColumn<Benutzer, String> id = new TableColumn<Benutzer, String>();
@@ -69,6 +78,18 @@ public class mainController implements Initializable {
 	private TableColumn<Benutzer, String> berufsJahr = new TableColumn<Benutzer, String>();
 	@FXML
 	private TableColumn<Benutzer, String> berufsGruppe = new TableColumn<Benutzer, String>();
+	@FXML
+	private TableColumn<Termin, String> userNameT = new TableColumn<Termin, String>();
+	@FXML
+	private TableColumn<Termin, String> kategorie = new TableColumn<Termin, String>();
+	@FXML
+	private TableColumn<Termin, String> kommentar = new TableColumn<Termin, String>();
+	@FXML
+	private TableColumn<Termin, String> von = new TableColumn<Termin, String>();
+	@FXML
+	private TableColumn<Termin, String> bis = new TableColumn<Termin, String>();
+	@FXML
+	private TableColumn<Termin, String> idT = new TableColumn<Termin, String>();
 	
 	
 	
@@ -122,6 +143,14 @@ public class mainController implements Initializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		List<Termin> TerminXL = null;
+		try {
+			TerminXL = mainController.manageTermineDAO.allTermine();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		ObservableList<Benutzer> userList = FXCollections.observableArrayList();
 		userList = FXCollections.observableArrayList(user);
 		userTbl.setItems(userList);
@@ -131,6 +160,27 @@ public class mainController implements Initializable {
 		berufsGruppe.setCellValueFactory(cellData -> cellData.getValue().getBerufsbild());
 		log.info("Benutzer hinzugefügt");
 	
+	}
+	
+	@FXML
+	public void initializeTermineButton(ActionEvent event) {
+		log.info("initializeTermine Button clicked");
+		List<Termin> TerminXL = null;
+		try {
+			TerminXL = mainController.manageTermineDAO.allTermine();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ObservableList<Termin> terminList = FXCollections.observableArrayList();
+		terminList = FXCollections.observableArrayList(TerminXL);
+		terminTbl.setItems(terminList);
+		idT.setCellValueFactory(cellData -> cellData.getValue().convertIdT());
+		kategorie.setCellValueFactory(cellData -> cellData.getValue().getKategorie());
+		kommentar.setCellValueFactory(cellData -> cellData.getValue().getKategorie());
+		von.setCellValueFactory(cellData -> cellData.getValue().getVon());
+		bis.setCellValueFactory(cellData -> cellData.getValue().getBis());
+		userNameT.setCellValueFactory(cellData -> cellData.getValue().getUserNameT());
 	}
 	@FXML
 	
@@ -180,13 +230,16 @@ public class mainController implements Initializable {
 			stage.setResizable(false);
 			stage.show();
 			Benutzer user = userTbl.getSelectionModel().getSelectedItem();
+			editUserController euc =  fxmlLoader.getController();
+			euc.setUser(user);
 			int selectedIndexEdit = userTbl.getSelectionModel().getSelectedIndex();
-			userTbl.getItems().remove(selectedIndexEdit);
+			
 			
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
 		
+		//Termine Buttons & Code
 	}
 	@FXML
 	public void addTermineButton(ActionEvent event) {
@@ -202,8 +255,22 @@ public class mainController implements Initializable {
 		stage.show();
 	}catch (Exception e) {
 		e.printStackTrace();
+		}
 	}
+	//Einstellungen Buttons & Code
+	
+	@FXML 
+	public void importButton(ActionEvent event) {
+	sqlImportQuery = importArea.getText();
+		
+	
+	
+		
+		
+		
+	
 	}
+	//Initialize Code zum setzen der ComboBox Items und Tabellen Items
 	public void initialize(URL location, ResourceBundle resources) {
 		berufsbild.setItems(berufsbildList);
 		ausbildungsjahr.setItems(ausbildungjahrList);
@@ -217,6 +284,8 @@ public class mainController implements Initializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+	
 		ObservableList<Benutzer> userList = FXCollections.observableArrayList();
 		userList = FXCollections.observableArrayList(user);
 		userTbl.setItems(userList);
@@ -225,8 +294,24 @@ public class mainController implements Initializable {
 		berufsJahr.setCellValueFactory(cellData -> cellData.getValue().convertAj());
 		berufsGruppe.setCellValueFactory(cellData -> cellData.getValue().getBerufsbild());
 		
+		
+		List<Termin> TerminXL = null;
+		try {
+			TerminXL = mainController.manageTermineDAO.allTermine();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		ObservableList<Termin> terminList = FXCollections.observableArrayList();
+		terminList = FXCollections.observableArrayList(TerminXL);
+		terminTbl.setItems(terminList);
+		idT.setCellValueFactory(cellData -> cellData.getValue().convertIdT());
+		kategorie.setCellValueFactory(cellData -> cellData.getValue().getKategorie());
+		kommentar.setCellValueFactory(cellData -> cellData.getValue().getKategorie());
+		von.setCellValueFactory(cellData -> cellData.getValue().getVon());
+		bis.setCellValueFactory(cellData -> cellData.getValue().getBis());
+		userNameT.setCellValueFactory(cellData -> cellData.getValue().getUserNameT());
 	}
-	
+	//Listen für ComboBoxen für Termine & Benutzer
 	@FXML
 	public ComboBox<String> berufsbild1;
 	ObservableList<String> berufsbildList = FXCollections.observableArrayList("IT", "KFB", "VFA", "FAMI", "Schreiner", "Elektroniker");
@@ -243,4 +328,10 @@ public class mainController implements Initializable {
 	@FXML
 	public ComboBox<String> kategorieT1;
 	ObservableList<String> kategorieTList = FXCollections.observableArrayList("Krank", "Urlaub", "Fachbereich", "Berufschule", "Innung");
-	}
+
+
+
+
+	
+	
+}
