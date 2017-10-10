@@ -66,6 +66,7 @@ public void initialize(URL location, ResourceBundle resources) {
 	
 @FXML
 public void saveButton(ActionEvent event) {
+	
 	Benutzer user = new Benutzer();
 	user.setName(vorname.getText() + " " + nachname.getText());
 	user.setAusbildungsjahr(Integer.parseInt(ausbildungsjahr.getValue()));
@@ -86,6 +87,7 @@ public void saveButton(ActionEvent event) {
 	alert.setContentText("Der Benutzer '" +  name + "' wurde angelegt");
 
 	alert.showAndWait();
+	AzubiMain.getMainController().initializeButton(event);
 }
 
 }

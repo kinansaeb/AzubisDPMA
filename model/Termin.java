@@ -93,28 +93,32 @@ public void setBis(StringProperty bis) {
 }
 
 public void setUserNameT(String string) {
-	// TODO Auto-generated method stub
+	this.userNameT.setValue(string);
 	
 }
 
 public void setKategorie(String string) {
-	// TODO Auto-generated method stub
+	kategorie.setValue(string);
 	
 }
 
 public void setKommentar(String string) {
-	// TODO Auto-generated method stub
-	
+	kommentar.setValue(string);
 }
 
 public void setVon(String string) {
-	// TODO Auto-generated method stub
-	
+	von.setValue(string);
 }
 
 public void setBis(String string) {
-	// TODO Auto-generated method stub
-	
+	bis.setValue(string);
+}
+public void setIdT(int integer){
+	idT.setValue(integer);
 }
 
+@Override
+public String toString(){
+return String.format("id=%i Name=%s von=%s bis=%s Kommentar=%s Kategorie=%s", idT.get(), userNameT.getValue(), von.getValue(), bis.getValue(), kommentar.getValue());
+}
 }

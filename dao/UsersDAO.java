@@ -36,8 +36,8 @@ public List<Benutzer> allUsers() throws SQLException {
 		Users.setId(result.getInt("id"));
 		Users.setName(result.getString("name"));
 		User.add(Users);
-	
 	}
+	stat.close();
 	return User;
 }
 public void addUser(Benutzer user) {

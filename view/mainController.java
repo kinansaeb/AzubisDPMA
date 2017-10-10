@@ -306,7 +306,7 @@ public class mainController implements Initializable {
 		terminTbl.setItems(terminList);
 		idT.setCellValueFactory(cellData -> cellData.getValue().convertIdT());
 		kategorie.setCellValueFactory(cellData -> cellData.getValue().getKategorie());
-		kommentar.setCellValueFactory(cellData -> cellData.getValue().getKategorie());
+		kommentar.setCellValueFactory(cellData -> cellData.getValue().getKommentar());
 		von.setCellValueFactory(cellData -> cellData.getValue().getVon());
 		bis.setCellValueFactory(cellData -> cellData.getValue().getBis());
 		userNameT.setCellValueFactory(cellData -> cellData.getValue().getUserNameT());

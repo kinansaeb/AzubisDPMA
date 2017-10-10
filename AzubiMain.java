@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.logging.Logger;
 
 import de.dpma.azubidpma.dao.dbCon;
+import de.dpma.azubidpma.view.mainController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -20,6 +21,7 @@ public class AzubiMain extends Application  {
 	public static Stage stage;
 	public static  dbCon con = null;
 	public static Connection connection = null;
+	private static mainController mC;
 	public static void main(String[] args) {
 		log.info("Applikation wird gestartet");
 		
@@ -39,6 +41,7 @@ public class AzubiMain extends Application  {
 		log.info("Scene wird initialisiert");
 		AnchorPane content;
 		content = (AnchorPane) loader.load();
+		mC = loader.getController();
 		Scene scene = new Scene(content);
 		stage.setResizable(false);
 		stage.setTitle("Abwesenheitsliste");
@@ -46,4 +49,7 @@ public class AzubiMain extends Application  {
 		stage.show();
 	}
 	
+	public static mainController getMainController() {
+		return mC;
+	}
 }

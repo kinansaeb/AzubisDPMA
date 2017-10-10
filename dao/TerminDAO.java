@@ -29,15 +29,20 @@ public List<Termin> allTermine() throws SQLException {
 	ResultSet result = stat.executeQuery();
 	
 	ArrayList<Termin> TerminXL = new ArrayList<>();
+	System.out.println("Ich bin dabei");
 	while (result.next()) {
+		System.out.println("Ich sollte auch dabei sein");
 		Termin TerminXXL = new Termin();
-		TerminXXL.setUserNameT(result.getString("userNameT"));
+		TerminXXL.setUserNameT(result.getString("name"));
 		TerminXXL.setKategorie(result.getString("kategorie"));
 		TerminXXL.setKommentar(result.getString("kommentar"));
 		TerminXXL.setVon(result.getString("von"));
 		TerminXXL.setBis(result.getString("bis"));
+		TerminXXL.setIdT(result.getInt("id"));
+		System.out.println(TerminXXL.toString());
 		TerminXL.add(TerminXXL);
 	}
+	stat.close();
 	return TerminXL;
 }
 
