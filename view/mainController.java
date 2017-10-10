@@ -3,13 +3,18 @@ package de.dpma.azubidpma.view;
 import de.dpma.azubidpma.AzubiMain;
 import de.dpma.azubidpma.dao.UsersDAO;
 import de.dpma.azubidpma.dao.dbCon;
+import de.dpma.azubidpma.model.Benutzer;
 import de.dpma.azubidpma.*;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
+
+import org.omg.CORBA.INITIALIZE;
+
 import javafx.stage.Stage;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,6 +25,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -35,7 +42,9 @@ public class mainController implements Initializable {
 	String dbOff;
 	
 	public static UsersDAO manageUsersDAO = new UsersDAO(AzubiMain.con.getConnection());
-	
+
+	@FXML
+	private TextField del_idFeld = new TextField();
 	@FXML
 	private TextField benutzerSuchfeld = new TextField();
 	@FXML
@@ -50,6 +59,16 @@ public class mainController implements Initializable {
 	private ComboBox<String> ausbildungsjahrT = new ComboBox();
 	@FXML
 	private ComboBox<String> kategorieT = new ComboBox();
+	@FXML
+	private TableView<Benutzer> userTbl = new TableView();
+	@FXML
+	private TableColumn<Benutzer, String> userName = new TableColumn<Benutzer, String>();
+	@FXML
+	private TableColumn<Benutzer, String> id = new TableColumn<Benutzer, String>();
+	@FXML
+	private TableColumn<Benutzer, String> berufsJahr = new TableColumn<Benutzer, String>();
+	@FXML
+	private TableColumn<Benutzer, String> berufsGruppe = new TableColumn<Benutzer, String>();
 	
 	
 	
@@ -92,7 +111,27 @@ public class mainController implements Initializable {
 		alert1.showAndWait();
 		}
 	}
-
+	
+	@FXML
+	public void initializeButton(ActionEvent event) {
+		log.info("initializeButton clicked");
+		List<Benutzer> user = null;
+		try {
+			user = mainController.manageUsersDAO.allUsers();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ObservableList<Benutzer> userList = FXCollections.observableArrayList();
+		userList = FXCollections.observableArrayList(user);
+		userTbl.setItems(userList);
+		userName.setCellValueFactory(cellData -> cellData.getValue().getName());
+		id.setCellValueFactory(cellData -> cellData.getValue().convertId());
+		berufsJahr.setCellValueFactory(cellData -> cellData.getValue().convertAj());
+		berufsGruppe.setCellValueFactory(cellData -> cellData.getValue().getBerufsbild());
+		log.info("Benutzer hinzugefügt");
+	
+	}
 	@FXML
 	
 	public void addUserButton(ActionEvent event) {
@@ -110,6 +149,43 @@ public class mainController implements Initializable {
 	}catch (Exception e) {
 		e.printStackTrace();
 	}
+	}
+	@FXML
+	
+	public void deleteUserButton(ActionEvent event) {
+		log.info("deleteUserButton clicked");
+		Benutzer user = userTbl.getSelectionModel().getSelectedItem();
+		int selectedIndexDelete = userTbl.getSelectionModel().getSelectedIndex();
+		userTbl.getItems().remove(selectedIndexDelete);
+		mainController.manageUsersDAO.deleteUser(user);
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Benutzer löschen");
+		alert.setHeaderText("Benutzer wurde gelöscht!");
+		alert.setContentText("Der Benutzer wurde erfolgreich gelöscht." );
+
+		alert.showAndWait();
+		log.info("Benutzer erfolgreich gelöscht");
+	}
+	
+	@FXML
+	private void editUserButton(ActionEvent event) {
+		log.info("editUserButton clicked");
+		try {
+			FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("editUser.fxml"));
+			log.info("Scene editUser.fxml wird initialisiert");
+			Parent root = (Parent) fxmlLoader.load();
+			stage = new Stage();
+			stage.setScene(new Scene(root));
+			stage.setTitle("Benutzer ändern");
+			stage.setResizable(false);
+			stage.show();
+			Benutzer user = userTbl.getSelectionModel().getSelectedItem();
+			int selectedIndexEdit = userTbl.getSelectionModel().getSelectedIndex();
+			userTbl.getItems().remove(selectedIndexEdit);
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 	}
 	@FXML
@@ -134,7 +210,23 @@ public class mainController implements Initializable {
 		berufsbildT.setItems(berufsbildTList);
 		ausbildungsjahrT.setItems(ausbildungjahrTList);
 		kategorieT.setItems(kategorieTList);
+		List<Benutzer> user = null;
+		try {
+			user = mainController.manageUsersDAO.allUsers();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ObservableList<Benutzer> userList = FXCollections.observableArrayList();
+		userList = FXCollections.observableArrayList(user);
+		userTbl.setItems(userList);
+		userName.setCellValueFactory(cellData -> cellData.getValue().getName());
+		id.setCellValueFactory(cellData -> cellData.getValue().convertId());
+		berufsJahr.setCellValueFactory(cellData -> cellData.getValue().convertAj());
+		berufsGruppe.setCellValueFactory(cellData -> cellData.getValue().getBerufsbild());
+		
 	}
+	
 	@FXML
 	public ComboBox<String> berufsbild1;
 	ObservableList<String> berufsbildList = FXCollections.observableArrayList("IT", "KFB", "VFA", "FAMI", "Schreiner", "Elektroniker");
@@ -151,5 +243,4 @@ public class mainController implements Initializable {
 	@FXML
 	public ComboBox<String> kategorieT1;
 	ObservableList<String> kategorieTList = FXCollections.observableArrayList("Krank", "Urlaub", "Fachbereich", "Berufschule", "Innung");
-
-}
+	}

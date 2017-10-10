@@ -6,13 +6,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
+
+import de.dpma.azubidpma.AzubiMain;
 import de.dpma.azubidpma.model.Benutzer;
+import javafx.stage.Stage;
 
 public class UsersDAO {
-final String SELECT_ALL_USERS = "SELECT * FROM KISAEB.BENUTZER"; // <---- Statement muss geändert werden
-final String ADD_USER = "INSERT INTO KISAEB.BENUTZER (ID, NAME, BERUFSBILD, AUSBILDUNGSJAHR) VALUES(?, ?, ?, ?)";
-
+	static Logger log = Logger.getLogger(AzubiMain.class.getName());
+	final String SELECT_ALL_USERS = "SELECT * FROM KISAEB.BENUTZER"; // <---- Statement muss geändert werden
+	final String ADD_USER = "INSERT INTO KISAEB.BENUTZER (ID, NAME, BERUFSBILD, AUSBILDUNGSJAHR) VALUES(BENUTZER_SEQUENCE.nextVal, ?, ?, ?)";
+	final String DELETE_USER = "DELETE FROM KISAEB.BENUTZER WHERE ID = ?";
 private final Connection con;
 
 public UsersDAO(Connection con) {
@@ -39,17 +44,30 @@ public List<Benutzer> allUsers() throws SQLException {
 public void addUser(Benutzer user) {
 	try {
 		PreparedStatement stat = con.prepareStatement(ADD_USER);
-		stat.setInt(1, user.getId().getValue());
-		stat.setString(2, user.getName().getValue());
-		stat.setString(3, user.getBerufsbild().getValue());
-		stat.setInt(4, user.getAusbildungsjahr().getValue());
+//		stat.setInt(1, user.getId().getValue());
+		stat.setString(1, user.getName().getValue());
+		stat.setString(2, user.getBerufsbild().getValue());
+		stat.setInt(3, user.getAusbildungsjahr().getValue());
 		stat.executeUpdate();
-
+		log.info("Neuer Benutzer angelegt");
+		
+		
 	} catch (SQLException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
+		
 	}
 
+}
+
+public void deleteUser(Benutzer user) {
+	try {
+		PreparedStatement stat = con.prepareStatement(DELETE_USER);
+		stat.setInt(1, user.getId().getValue());
+		stat.executeUpdate();
+	}catch (SQLException e) {
+		e.printStackTrace();
+	}
 }
 
 }

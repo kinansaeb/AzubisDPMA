@@ -66,24 +66,25 @@
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                  <children>
                                     <Button layoutX="12.0" layoutY="163.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="190.0" text="Suchen" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="13.0" />
-                                    <Button layoutX="10.0" layoutY="211.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="190.0" text="Ändern" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="13.0" />
+                                    <Button layoutX="10.0" layoutY="211.0" mnemonicParsing="false" onAction="#editUserButton" prefHeight="31.0" prefWidth="190.0" text="Ändern" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="13.0" />
                                     <TextField fx:id="benutzerSuchfeld" layoutX="14.0" layoutY="27.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="13.0" />
                                     <ComboBox fx:id="ausbildungsjahr" layoutX="12.0" layoutY="72.0" prefHeight="31.0" prefWidth="191.0" promptText="Ausbildungsjahr" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="13.0" />
                                     <ComboBox fx:id="berufsbild" layoutX="13.0" layoutY="113.0" prefHeight="31.0" prefWidth="189.0" promptText="Berufsbild" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="13.0" />
-                                    <Button layoutX="10.0" layoutY="257.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="190.0" text="Löschen" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="13.0" />
+                                    <Button layoutX="10.0" layoutY="257.0" mnemonicParsing="false" onAction="#deleteUserButton" prefHeight="31.0" prefWidth="186.0" text="Löschen" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="13.0" />
                                     <Text layoutX="14.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Benutzer suchen:" />
-                                    <Button layoutX="16.0" layoutY="310.0" mnemonicParsing="false" onAction="#addUserButton" prefHeight="31.0" prefWidth="190.0" text="Benutzer hinzufügen" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="13.0" />
-                                    <Button layoutX="15.0" layoutY="377.0" mnemonicParsing="false" onAction="#testConnectionButton" prefHeight="31.0" prefWidth="188.0" text="Test Connection" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="14.0" />
+                                    <Button layoutX="16.0" layoutY="298.0" mnemonicParsing="false" onAction="#addUserButton" prefHeight="31.0" prefWidth="126.0" text="Benutzer hinzufügen" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="13.0" />
+                                    <Button layoutX="15.0" layoutY="380.0" mnemonicParsing="false" onAction="#testConnectionButton" prefHeight="31.0" prefWidth="188.0" text="Test Connection" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="14.0" />
+                                    <Button layoutX="15.0" layoutY="339.0" mnemonicParsing="false" onAction="#initializeButton" prefHeight="31.0" prefWidth="183.0" text="Initialize Button" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="14.0" />
                                  </children>
                               </AnchorPane>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                  <children>
-                                    <TableView prefHeight="423.0" prefWidth="513.0">
+                                    <TableView fx:id="userTbl" prefHeight="423.0" prefWidth="513.0">
                                       <columns>
-                                        <TableColumn prefWidth="75.0" text="ID" />
-                                        <TableColumn prefWidth="106.0" text="Name" />
-                                          <TableColumn prefWidth="127.0" text="Berufsbild" />
-                                          <TableColumn prefWidth="204.0" text="Ausbildungsjahr" />
+                                        <TableColumn fx:id="id" prefWidth="75.0" text="ID" />
+                                        <TableColumn fx:id="userName" prefWidth="106.0" text="Name" />
+                                          <TableColumn fx:id="berufsGruppe" prefWidth="127.0" text="Berufsbild" />
+                                          <TableColumn fx:id="berufsJahr" prefWidth="204.0" text="Ausbildungsjahr" />
                                       </columns>
                                     </TableView>
                                  </children>

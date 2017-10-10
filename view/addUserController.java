@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
+import de.dpma.azubidpma.view.*;
 import de.dpma.azubidpma.AzubiMain;
 import de.dpma.azubidpma.model.Benutzer;
 import javafx.collections.FXCollections;
@@ -13,8 +14,12 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -31,7 +36,6 @@ private TextField nachname = new TextField();
 private ComboBox<String> berufsbild = new ComboBox();
 @FXML
 private ComboBox<String> ausbildungsjahr = new ComboBox();
-
 
 
 @FXML
@@ -51,14 +55,14 @@ try {
 }
 	
 }
-	public void initialize(URL location, ResourceBundle resources) {
+public void initialize(URL location, ResourceBundle resources) {
 		vorname.setPromptText("vorname");
 		nachname.setPromptText("nachname");
 		berufsbild.setPromptText("Bitte Auswählen");
 		ausbildungsjahr.setPromptText("Bitte Auswählen");
 		berufsbild.setItems(berufsbildList);
 		ausbildungsjahr.setItems(ausbildungjahrList);
-	}
+}
 	
 @FXML
 public void saveButton(ActionEvent event) {
@@ -66,6 +70,7 @@ public void saveButton(ActionEvent event) {
 	user.setName(vorname.getText() + " " + nachname.getText());
 	user.setAusbildungsjahr(Integer.parseInt(ausbildungsjahr.getValue()));
 	user.setBerufsbild(berufsbild.getValue());
+	String name = (vorname.getText() + " " + nachname.getText());
 	try {
 		mainController.manageUsersDAO.addUser(user);
 		List<Benutzer> lastUser = mainController.manageUsersDAO.allUsers();
@@ -74,5 +79,13 @@ public void saveButton(ActionEvent event) {
 		e.printStackTrace();
 	}
 	
+	((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+	Alert alert = new Alert(AlertType.INFORMATION);
+	alert.setTitle("Benutzer anlegen");
+	alert.setHeaderText("Benutzer angelegt!");
+	alert.setContentText("Der Benutzer '" +  name + "' wurde angelegt");
+
+	alert.showAndWait();
 }
+
 }
