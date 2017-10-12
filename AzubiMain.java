@@ -5,8 +5,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Logger;
 
-import de.dpma.azubidpma.dao.dbCon;
-import de.dpma.azubidpma.view.mainController;
+import de.dpma.azubidpma.dao.DbCon;
+import de.dpma.azubidpma.model.Benutzer;
+import de.dpma.azubidpma.view.MainController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -19,13 +20,23 @@ public class AzubiMain extends Application  {
 
 	static Logger log = Logger.getLogger(AzubiMain.class.getName());
 	public static Stage stage;
-	public static  dbCon con = null;
-	public static Connection connection = null;
-	private static mainController mC;
+	private static  Connection con = null;
+	public static Connection getCon() {
+		return con;
+	}
+
+	public static void setCon(Connection con) {
+		AzubiMain.con = con;
+	}
+
+	public static Benutzer users = null;
+//	public static Connection connection = null;
+	private static MainController mC;
 	public static void main(String[] args) {
 		log.info("Applikation wird gestartet");
 		
-		con = new dbCon();
+		setCon(DbCon.getConnection());
+		
 		log.info("Datenbank Verbindung wird hergestellt");
 		Application.launch(AzubiMain.class, args);
 
@@ -49,7 +60,15 @@ public class AzubiMain extends Application  {
 		stage.show();
 	}
 	
-	public static mainController getMainController() {
+	public static Benutzer getUsers() {
+		return users;
+	}
+
+	public static void setUsers(Benutzer users) {
+		AzubiMain.users = users;
+	}
+
+	public static MainController getMainController() {
 		return mC;
 	}
 }

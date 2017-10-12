@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import org.apache.commons.dbutils.DbUtils;
 
 import de.dpma.azubidpma.AzubiMain;
 import de.dpma.azubidpma.model.Benutzer;
@@ -18,27 +19,58 @@ public class UsersDAO {
 	final String SELECT_ALL_USERS = "SELECT * FROM KISAEB.BENUTZER"; // <---- Statement muss geändert werden
 	final String ADD_USER = "INSERT INTO KISAEB.BENUTZER (ID, NAME, BERUFSBILD, AUSBILDUNGSJAHR) VALUES(BENUTZER_SEQUENCE.nextVal, ?, ?, ?)";
 	final String DELETE_USER = "DELETE FROM KISAEB.BENUTZER WHERE ID = ?";
-	final String ALTER_USER = "UPDATE KISAEB.BENUTZER set (NAME, BERUFSBILD, AUSBILDUNGSJAHR) where id = VALUES(?, ?, ?, ?)";
+	final String ALTER_USER = "UPDATE KISAEB.BENUTZER SET (NAME, BERUFSBILD, AUSBILDUNGSJAHR) VALUES(?, ?, ?) WHERE ID = ?";
+//	final String GET_USERNAMES = "SELECT NAME FROM KISAEB.BENUTZER";
+//	
+	
+	
 private final Connection con;
+private ArrayList<Benutzer> benutzerListe = new ArrayList<>();
+
+public ArrayList<Benutzer> getBenutzerListe() {
+	return benutzerListe;
+}
+
+public void setBenutzerListe(ArrayList<Benutzer> benutzerListe) {
+	this.benutzerListe = benutzerListe;
+}
 
 public UsersDAO(Connection con) {
 	this.con = con;
 }
+
+//public void getUserNames(Benutzer user) {
+//	PreparedStatement stat = null;
+//	
+//	try {
+//		stat = con.prepareStatement(GET_USERNAMES);
+//		ResultSet result = stat.executeQuery();
+//	} catch (SQLException e) {
+//		e.printStackTrace();
+//	} finally {
+//		DbUtils.closeQuietly(stat);
+//	}
+//	
+//}
 public List<Benutzer> allUsers() throws SQLException {
-	PreparedStatement stat = con.prepareStatement(SELECT_ALL_USERS);
-	ResultSet result = stat.executeQuery();
-	
-	ArrayList<Benutzer> User = new ArrayList<>();
-	while (result.next()) {
-		Benutzer Users = new Benutzer();
-		Users.setBerufsbild(result.getString("berufsbild"));
-		Users.setAusbildungsjahr(result.getInt("ausbildungsjahr"));
-		Users.setId(result.getInt("id"));
-		Users.setName(result.getString("name"));
-		User.add(Users);
+	PreparedStatement stat = null;
+	try {
+		stat = con.prepareStatement(SELECT_ALL_USERS);
+		ResultSet result = stat.executeQuery();
+		
+		while (result.next()) {
+			Benutzer benutzer = new Benutzer();
+			benutzer.setBerufsbild(result.getString("berufsbild"));
+			benutzer.setAusbildungsjahr(result.getInt("ausbildungsjahr"));
+			benutzer.setId(result.getInt("id"));
+			benutzer.setName(result.getString("name"));
+			benutzerListe.add(benutzer);
+		}
+	} finally {
+        DbUtils.closeQuietly(stat);
+
 	}
-	stat.close();
-	return User;
+	return benutzerListe;
 }
 public void addUser(Benutzer user) {
 	try {
@@ -74,6 +106,7 @@ public void editUser(Benutzer user) {
 		stat.setString (1, user.getName().getValue());
 		stat.setString(2, user.getBerufsbild().getValue());
 		stat.setInt(3, user.getAusbildungsjahr().getValue());
+		stat.setInt(4, user.getId().getValue());
 		log.info("Benutzer Informationen geändert");
 	} catch (SQLException e) {
 		e.printStackTrace();

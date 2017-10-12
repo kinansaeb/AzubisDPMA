@@ -16,19 +16,21 @@ private StringProperty kategorie = new SimpleStringProperty();
 private StringProperty kommentar = new SimpleStringProperty();
 private StringProperty von = new SimpleStringProperty();
 private StringProperty bis = new SimpleStringProperty();
+private StringProperty referat = new SimpleStringProperty();
 
 
 public Termin() {
 	
 }
 
-public Termin(String userNameT, String kategorie, String kommentar, String von, String bis, int idT) {
+public Termin(String userNameT, String kategorie, String kommentar, String von, String bis, int idT, String referat) {
 	this.userNameT = new SimpleStringProperty(userNameT);
 	this.kategorie = new SimpleStringProperty(kategorie);
 	this.kommentar = new SimpleStringProperty(kommentar);
 	this.bis = new SimpleStringProperty(bis);
 	this.von = new SimpleStringProperty(von);
 	this.idT = new SimpleIntegerProperty(idT);
+	this.referat = new SimpleStringProperty();
 }
 
 public IntegerProperty getIdT() {
@@ -117,8 +119,18 @@ public void setIdT(int integer){
 	idT.setValue(integer);
 }
 
-@Override
-public String toString(){
-return String.format("id=%i Name=%s von=%s bis=%s Kommentar=%s Kategorie=%s", idT.get(), userNameT.getValue(), von.getValue(), bis.getValue(), kommentar.getValue());
+public StringProperty getReferat() {
+	return referat;
 }
+
+public void setReferat(StringProperty referat) {
+	this.referat = referat;
+}
+
+public void setReferat(String string) {
+referat.setValue(string);
+	
+}
+
+
 }

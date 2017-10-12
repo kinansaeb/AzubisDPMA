@@ -73,8 +73,8 @@ public void saveButton(ActionEvent event) {
 	user.setBerufsbild(berufsbild.getValue());
 	String name = (vorname.getText() + " " + nachname.getText());
 	try {
-		mainController.manageUsersDAO.addUser(user);
-		List<Benutzer> lastUser = mainController.manageUsersDAO.allUsers();
+		MainController.manageUsersDAO.addUser(user);
+		List<Benutzer> lastUser = MainController.manageUsersDAO.allUsers();
 	} catch (SQLException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
