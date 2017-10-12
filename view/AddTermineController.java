@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 
 import de.dpma.azubidpma.AzubiMain;
 import de.dpma.azubidpma.dao.UsersDAO;
+import de.dpma.azubidpma.model.Benutzer;
 import de.dpma.azubidpma.model.Termin;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -30,10 +31,6 @@ AzubiMain azb = new AzubiMain();
 public static Stage stage;
 
 @FXML
-private ComboBox namenListe = new ComboBox();
-@FXML
-private ComboBox kategorie = new ComboBox();
-@FXML
 private TextField referat = new TextField();
 @FXML
 private DatePicker von = new DatePicker();
@@ -43,29 +40,35 @@ private DatePicker bis = new DatePicker();
 private TextArea kommentar = new TextArea();
 
 @FXML
-public ComboBox<String> kategorie1;
+public ComboBox<String> kategorie;
 ObservableList<String> kategorie1List = FXCollections.observableArrayList("Fachbereich", "Urlaub", "Berufschule", "Krank", "Vermisst");
 
 @FXML
-public ComboBox<String> namen1;
-ObservableList<String> namen1Liste = FXCollections.observableArrayList(getBenutzerListe); // <-----
+public ComboBox<String> userComboBox;
+List<Benutzer> userListe = MainController.manageUsersDAO.allUsers();
+
 
 @FXML
 
 public void initialize(URL location, ResourceBundle resources) {
 	kommentar.setPromptText("Falls gewünscht hier Kommentar eingeben...");	
-	kategorie1.setItems(kategorie1List);
+	kategorie.setItems(kategorie1List);
 	von.setPromptText("Datum-Von");
 	bis.setPromptText("Datum-Bis");
 	UsersDAO usersDao = MainController.manageUsersDAO;
-	usersDao.getBenutzerListe();
-	namenListe.setItems(namen1Liste);
+	ObservableList<String> userComboBoxList = FXCollections.observableArrayList();
+	for (int i = 0; i < userListe.size(); i++){
+//	usersDao.getBenutzerListe(); //<----
+//	userComboBox.setItems(userListe);
+	userComboBoxList.add(/*userListe.get(i).getId().getValue() + " | " + */userListe.get(i).getName().getValue());
+	}
+	userComboBox.setItems(userComboBoxList);
 }
 
 @FXML
 public void saveButton(ActionEvent event) {
 	Termin terminXL = new Termin();
-	terminXL.setUserNameT(namenListe.getSelectionModel().getSelectedItem().toString());
+	terminXL.setUserNameT(userComboBox.getSelectionModel().getSelectedItem().toString());
 	terminXL.setReferat(referat.getText());
 	terminXL.setKategorie(kategorie.getSelectionModel().getSelectedItem().toString());
 	terminXL.setVon(von.getValue().toString());

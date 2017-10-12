@@ -14,7 +14,7 @@
       <Text layoutX="15.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Benutzer" />
       <TextField fx:id="referat" layoutX="185.0" layoutY="38.0" prefHeight="31.0" prefWidth="47.0" />
       <Text layoutX="185.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Referat" />
-      <ComboBox fx:id="kategorie1" layoutX="261.0" layoutY="38.0" prefHeight="31.0" prefWidth="218.0" />
+      <ComboBox fx:id="kategorie" layoutX="261.0" layoutY="38.0" prefHeight="31.0" prefWidth="218.0" />
       <DatePicker fx:id="von" layoutX="14.0" layoutY="105.0" AnchorPane.bottomAnchor="278.0" AnchorPane.leftAnchor="14.0" />
       <DatePicker fx:id="bis" layoutX="261.0" layoutY="105.0" AnchorPane.bottomAnchor="278.0" />
       <Text layoutX="14.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Von" />
@@ -25,6 +25,6 @@
       <Line endX="600.0" layoutX="81.0" layoutY="164.0" startX="-100.0" />
       <Button layoutX="20.0" layoutY="368.0" mnemonicParsing="false" onAction="#saveButton" text="Speichern" />
       <Button layoutX="130.0" layoutY="368.0" mnemonicParsing="false" onAction="#abortButton" text="Abbrechen" />
-      <ComboBox fx:id="namenListe" layoutX="16.0" layoutY="38.0" prefWidth="150.0" />
+      <ComboBox fx:id="userComboBox" layoutX="16.0" layoutY="38.0" prefWidth="150.0" />
    </children>
 </AnchorPane>

@@ -72,13 +72,8 @@ public void saveButton(ActionEvent event) {
 	user.setAusbildungsjahr(Integer.parseInt(ausbildungsjahr.getValue()));
 	user.setBerufsbild(berufsbild.getValue());
 	String name = (vorname.getText() + " " + nachname.getText());
-	try {
-		MainController.manageUsersDAO.addUser(user);
-		List<Benutzer> lastUser = MainController.manageUsersDAO.allUsers();
-	} catch (SQLException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
+	MainController.manageUsersDAO.addUser(user);
+	List<Benutzer> lastUser = MainController.manageUsersDAO.allUsers();
 	
 	((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
 	Alert alert = new Alert(AlertType.INFORMATION);

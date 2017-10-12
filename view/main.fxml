@@ -10,39 +10,45 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="545.0" prefWidth="888.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.dpma.azubidpma.view.MainController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="599.0" prefWidth="997.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.dpma.azubidpma.view.MainController">
    <children>
-      <TabPane layoutX="-3.0" prefHeight="545.0" prefWidth="888.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane layoutX="31.0" prefHeight="599.0" prefWidth="969.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Termine">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="377.0" prefWidth="699.0">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="536.0" prefWidth="973.0">
                      <children>
-                        <SplitPane dividerPositions="0.3034013605442177" layoutY="-2.0" prefHeight="511.0" prefWidth="888.0">
+                        <SplitPane dividerPositions="0.3034013605442177" layoutX="-4.0" layoutY="-2.0" prefHeight="564.0" prefWidth="969.0">
                           <items>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="219.0">
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="562.0" prefWidth="232.0">
                                  <children>
-                                    <Button layoutX="17.0" layoutY="263.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="190.0" text="Suchen" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="13.0" />
-                                    <Button layoutX="16.0" layoutY="302.0" mnemonicParsing="false" onAction="#addTermineButton" prefHeight="31.0" prefWidth="190.0" text="Termin anlegen" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="13.0" />
+                                    <Button layoutX="16.0" layoutY="351.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="190.0" text="Suchen" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="13.0" />
+                                    <Button layoutX="15.0" layoutY="416.0" mnemonicParsing="false" onAction="#addTermineButton" prefHeight="31.0" prefWidth="190.0" text="Termin anlegen" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="14.0" />
                                     <TextField fx:id="terminSuchfeld" layoutX="18.0" layoutY="28.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="13.0" />
-                                    <ComboBox fx:id="ausbildungsjahrT" layoutX="16.0" layoutY="69.0" prefHeight="31.0" prefWidth="191.0" promptText="Ausbildungsjahr" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="13.0" />
-                                    <ComboBox fx:id="berufsbildT" layoutX="17.0" layoutY="108.0" prefHeight="31.0" prefWidth="189.0" promptText="Berufsbild" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="13.0" />
-                                    <Button layoutX="16.0" layoutY="340.0" mnemonicParsing="false" onAction="#deleteTerminButton" prefHeight="31.0" prefWidth="190.0" text="Termin löschen" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="13.0" />
+                                    <ComboBox fx:id="ausbildungsjahrT" layoutX="16.0" layoutY="81.0" prefHeight="31.0" prefWidth="191.0" promptText="Ausbildungsjahr" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="13.0" />
+                                    <ComboBox fx:id="berufsbildT" layoutX="15.0" layoutY="131.0" prefHeight="31.0" prefWidth="189.0" promptText="Berufsbild" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="14.0" />
+                                    <Button layoutX="15.0" layoutY="483.0" mnemonicParsing="false" onAction="#deleteTerminButton" prefHeight="31.0" prefWidth="190.0" text="Termin löschen" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="14.0" />
                                     <Text layoutX="18.0" layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Termin suchen:" AnchorPane.leftAnchor="18.0" />
-                                    <ComboBox fx:id="kategorieT" layoutX="17.0" layoutY="148.0" prefHeight="31.0" prefWidth="189.0" promptText="Kategorie" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="13.0" />
-                                    <DatePicker layoutX="15.0" layoutY="186.0" prefHeight="31.0" prefWidth="193.0" promptText="Von" showWeekNumbers="true" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="13.0" />
-                                    <DatePicker layoutX="15.0" layoutY="225.0" prefHeight="31.0" prefWidth="193.0" promptText="Bis" showWeekNumbers="true" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="13.0" />
-                                    <Button layoutX="15.0" layoutY="376.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="190.0" text="Alle Termine anzeigen" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="13.0" />
-                                    <Button layoutX="193.0" layoutY="-1.0" mnemonicParsing="false" onAction="#initializeTermineButton" prefHeight="10.0" prefWidth="0.0" text="!" />
+                                    <ComboBox fx:id="kategorieT" layoutX="15.0" layoutY="178.0" prefHeight="31.0" prefWidth="189.0" promptText="Kategorie" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="14.0" />
+                                    <DatePicker layoutX="15.0" layoutY="231.0" prefHeight="31.0" prefWidth="193.0" promptText="Von" showWeekNumbers="true" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="14.0" />
+                                    <DatePicker layoutX="15.0" layoutY="294.0" prefHeight="31.0" prefWidth="193.0" promptText="Bis" showWeekNumbers="true" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="14.0" />
+                                    <Text layoutX="135.0" layoutY="290.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
+                                       <font>
+                                          <Font size="42.0" />
+                                       </font>
+                                    </Text>
                                  </children>
                               </AnchorPane>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="404.0" prefWidth="504.0">
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="529.0" prefWidth="714.0">
                                  <children>
-                                    <TableView fx:id="terminTbl" layoutX="-1.0" layoutY="-3.0" prefHeight="512.0" prefWidth="618.0">
+                                    <TableView fx:id="terminTbl" layoutX="-1.0" layoutY="-3.0" prefHeight="561.0" prefWidth="682.0">
                                       <columns>
                                         <TableColumn fx:id="idT" prefWidth="37.0" text="ID" />
                                         <TableColumn fx:id="userNameT" prefWidth="86.0" text="Name" />
@@ -64,25 +70,23 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <SplitPane dividerPositions="0.29797979797979796" layoutX="1.0" layoutY="-2.0" prefHeight="508.0" prefWidth="888.0">
+                        <SplitPane dividerPositions="0.29797979797979796" layoutX="1.0" layoutY="-2.0" prefHeight="564.0" prefWidth="969.0">
                           <items>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                  <children>
-                                    <Button layoutX="12.0" layoutY="163.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="190.0" text="Suchen" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="13.0" />
-                                    <Button layoutX="10.0" layoutY="211.0" mnemonicParsing="false" onAction="#editUserButton" prefHeight="31.0" prefWidth="190.0" text="Ändern" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="13.0" />
+                                    <Button layoutX="15.0" layoutY="159.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="190.0" text="Suchen" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="14.0" />
+                                    <Button layoutX="16.0" layoutY="339.0" mnemonicParsing="false" onAction="#editUserButton" prefHeight="31.0" prefWidth="190.0" text="Ändern" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="13.0" />
                                     <TextField fx:id="benutzerSuchfeld" layoutX="14.0" layoutY="27.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="13.0" />
                                     <ComboBox fx:id="ausbildungsjahr" layoutX="12.0" layoutY="72.0" prefHeight="31.0" prefWidth="191.0" promptText="Ausbildungsjahr" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="13.0" />
                                     <ComboBox fx:id="berufsbild" layoutX="13.0" layoutY="113.0" prefHeight="31.0" prefWidth="189.0" promptText="Berufsbild" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="13.0" />
-                                    <Button layoutX="10.0" layoutY="257.0" mnemonicParsing="false" onAction="#deleteUserButton" prefHeight="31.0" prefWidth="186.0" text="Löschen" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="13.0" />
+                                    <Button layoutX="16.0" layoutY="412.0" mnemonicParsing="false" onAction="#deleteUserButton" prefHeight="31.0" prefWidth="186.0" text="Löschen" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="13.0" />
                                     <Text layoutX="14.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Benutzer suchen:" />
-                                    <Button layoutX="16.0" layoutY="298.0" mnemonicParsing="false" onAction="#addUserButton" prefHeight="31.0" prefWidth="126.0" text="Benutzer hinzufügen" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="13.0" />
-                                    <Button layoutX="15.0" layoutY="380.0" mnemonicParsing="false" onAction="#testConnectionButton" prefHeight="31.0" prefWidth="188.0" text="Test Connection" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="14.0" />
-                                    <Button layoutX="15.0" layoutY="339.0" mnemonicParsing="false" onAction="#initializeButton" prefHeight="31.0" prefWidth="183.0" text="Initialize Button" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="14.0" />
+                                    <Button layoutX="15.0" layoutY="497.0" mnemonicParsing="false" onAction="#addUserButton" prefHeight="31.0" prefWidth="126.0" text="Benutzer hinzufügen" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="14.0" />
                                  </children>
                               </AnchorPane>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                  <children>
-                                    <TableView fx:id="userTbl" prefHeight="509.0" prefWidth="618.0">
+                                    <TableView fx:id="userTbl" prefHeight="564.0" prefWidth="675.0">
                                       <columns>
                                         <TableColumn fx:id="id" prefWidth="75.0" text="ID" />
                                         <TableColumn fx:id="userName" prefWidth="182.0" text="Name" />
@@ -125,5 +129,18 @@
             </Tab>
         </tabs>
       </TabPane>
+      <ImageView fitHeight="29.0" fitWidth="33.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../lib/refresh%20icon.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="29.0" fitWidth="51.0" layoutY="119.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../lib/connection%20icon.png" />
+         </image>
+      </ImageView>
+      <Button layoutX="-6.0" layoutY="41.0" mnemonicParsing="false" onAction="#refreshButton" opacity="0.0" prefHeight="41.0" prefWidth="41.0" />
+      <Line endX="100.0" layoutX="-68.0" layoutY="-84.0" startX="100.0" startY="700.0" />
+      <Button layoutX="-6.0" layoutY="113.0" mnemonicParsing="false" onAction="#testConnectionButton" opacity="0.0" prefHeight="41.0" prefWidth="41.0" />
    </children>
 </AnchorPane>

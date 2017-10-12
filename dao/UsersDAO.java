@@ -12,6 +12,7 @@ import org.apache.commons.dbutils.DbUtils;
 
 import de.dpma.azubidpma.AzubiMain;
 import de.dpma.azubidpma.model.Benutzer;
+import de.dpma.azubidpma.model.Termin;
 import javafx.stage.Stage;
 
 public class UsersDAO {
@@ -20,7 +21,7 @@ public class UsersDAO {
 	final String ADD_USER = "INSERT INTO KISAEB.BENUTZER (ID, NAME, BERUFSBILD, AUSBILDUNGSJAHR) VALUES(BENUTZER_SEQUENCE.nextVal, ?, ?, ?)";
 	final String DELETE_USER = "DELETE FROM KISAEB.BENUTZER WHERE ID = ?";
 	final String ALTER_USER = "UPDATE KISAEB.BENUTZER SET (NAME, BERUFSBILD, AUSBILDUNGSJAHR) VALUES(?, ?, ?) WHERE ID = ?";
-//	final String GET_USERNAMES = "SELECT NAME FROM KISAEB.BENUTZER";
+	final String GET_USERNAME_BY_ID = "SELECT ID FROM KISAEB.BENUTZER WHERE BENUTZER_ID = ?";
 //	
 	
 	
@@ -39,25 +40,32 @@ public UsersDAO(Connection con) {
 	this.con = con;
 }
 
-//public void getUserNames(Benutzer user) {
-//	PreparedStatement stat = null;
-//	
-//	try {
-//		stat = con.prepareStatement(GET_USERNAMES);
-//		ResultSet result = stat.executeQuery();
-//	} catch (SQLException e) {
-//		e.printStackTrace();
-//	} finally {
-//		DbUtils.closeQuietly(stat);
-//	}
-//	
-//}
-public List<Benutzer> allUsers() throws SQLException {
+public Benutzer getUser(int userID) {
+	PreparedStatement stat = null;
+	Benutzer benutzer = new Benutzer();
+	try {
+		stat = con.prepareStatement(GET_USERNAME_BY_ID);
+		stat.setInt(1, userID);
+		ResultSet result = stat.executeQuery();
+		benutzer.setBerufsbild(result.getString("berufsbild"));
+		benutzer.setAusbildungsjahr(result.getInt("ausbildungsjahr"));
+		benutzer.setId(result.getInt("id"));
+		benutzer.setName(result.getString("name"));
+		return benutzer;
+	} catch (SQLException e) {
+		e.printStackTrace();
+	} finally {
+		DbUtils.closeQuietly(stat);
+	}
+	return null;
+	
+}
+public List<Benutzer> allUsers() {
 	PreparedStatement stat = null;
 	try {
 		stat = con.prepareStatement(SELECT_ALL_USERS);
 		ResultSet result = stat.executeQuery();
-		
+		benutzerListe.clear();
 		while (result.next()) {
 			Benutzer benutzer = new Benutzer();
 			benutzer.setBerufsbild(result.getString("berufsbild"));
@@ -66,11 +74,14 @@ public List<Benutzer> allUsers() throws SQLException {
 			benutzer.setName(result.getString("name"));
 			benutzerListe.add(benutzer);
 		}
+	} catch (SQLException e) {
+		e.printStackTrace();
 	} finally {
         DbUtils.closeQuietly(stat);
 
 	}
 	return benutzerListe;
+	
 }
 public void addUser(Benutzer user) {
 	try {
@@ -96,6 +107,7 @@ public void deleteUser(Benutzer user) {
 		PreparedStatement stat = con.prepareStatement(DELETE_USER);
 		stat.setInt(1, user.getId().getValue());
 		stat.executeUpdate();
+		
 	} catch (SQLException e) {
 		e.printStackTrace();
 	}
@@ -112,4 +124,5 @@ public void editUser(Benutzer user) {
 		e.printStackTrace();
 	}
 }
+
 }

@@ -1,5 +1,6 @@
 package de.dpma.azubidpma.model;
 
+import de.dpma.azubidpma.view.MainController;
 import javafx.beans.*;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
@@ -11,6 +12,7 @@ import javafx.util.converter.NumberStringConverter;
 
 public class Termin {
 private IntegerProperty idT = new SimpleIntegerProperty();
+private IntegerProperty userID = new SimpleIntegerProperty();
 private StringProperty userNameT = new SimpleStringProperty();
 private StringProperty kategorie = new SimpleStringProperty();
 private StringProperty kommentar = new SimpleStringProperty();
@@ -23,14 +25,15 @@ public Termin() {
 	
 }
 
-public Termin(String userNameT, String kategorie, String kommentar, String von, String bis, int idT, String referat) {
+public Termin(String userNameT, String kategorie, String kommentar, String von, String bis, int idT, String referat, int userID) {
 	this.userNameT = new SimpleStringProperty(userNameT);
 	this.kategorie = new SimpleStringProperty(kategorie);
 	this.kommentar = new SimpleStringProperty(kommentar);
 	this.bis = new SimpleStringProperty(bis);
 	this.von = new SimpleStringProperty(von);
 	this.idT = new SimpleIntegerProperty(idT);
-	this.referat = new SimpleStringProperty();
+	this.referat = new SimpleStringProperty(referat);
+	this.userID = new SimpleIntegerProperty(userID);
 }
 
 public IntegerProperty getIdT() {
@@ -132,5 +135,17 @@ referat.setValue(string);
 	
 }
 
+public IntegerProperty getUserID() {
+	return userID;
+}
+
+public void setUserID(IntegerProperty userID) {
+	this.userID = userID;
+}
+
+public String getUserName() {
+	Benutzer benutzer = MainController.manageUsersDAO.getUser(this.getUserID().getValue());
+	return benutzer.getName().getValue();
+}
 
 }

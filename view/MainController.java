@@ -91,6 +91,50 @@ public class MainController implements Initializable {
 	private TableColumn<Termin, String> idT = new TableColumn<Termin, String>();
 	@FXML
 	private TableColumn<Termin, String> referat = new TableColumn<Termin, String>();
+
+	
+	@FXML
+	public void refreshButton(ActionEvent event) {
+	
+		List<Benutzer> user = null;
+		user = MainController.manageUsersDAO.allUsers();
+		List<Termin> TerminXL = null;
+		try {
+			TerminXL = MainController.manageTermineDAO.allTermine();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		ObservableList<Benutzer> userList = FXCollections.observableArrayList();
+		userList = FXCollections.observableArrayList(user);
+		userTbl.setItems(userList);
+		userName.setCellValueFactory(cellData -> cellData.getValue().getName());
+		id.setCellValueFactory(cellData -> cellData.getValue().convertId());
+		berufsJahr.setCellValueFactory(cellData -> cellData.getValue().convertAj());
+		berufsGruppe.setCellValueFactory(cellData -> cellData.getValue().getBerufsbild());
+		log.info("Benutzer hinzugefügt");
+	
+	
+		List<Termin> terminListe = null;
+		try {
+			terminListe = MainController.manageTermineDAO.allTermine();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ObservableList<Termin> terminList = FXCollections.observableArrayList();
+		terminList = FXCollections.observableArrayList(terminListe);
+		terminTbl.setItems(terminList);
+		idT.setCellValueFactory(cellData -> cellData.getValue().convertIdT());
+		kategorie.setCellValueFactory(cellData -> cellData.getValue().getKategorie());
+		kommentar.setCellValueFactory(cellData -> cellData.getValue().getKategorie());
+		von.setCellValueFactory(cellData -> cellData.getValue().getVon());
+		bis.setCellValueFactory(cellData -> cellData.getValue().getBis());
+		userNameT.setCellValueFactory(cellData -> cellData.getValue().getUserNameT());
+		referat.setCellValueFactory(cellData -> cellData.getValue().getReferat());
+	}
+	
 	
 	
 	
@@ -138,12 +182,7 @@ public class MainController implements Initializable {
 	public void initializeButton(ActionEvent event) {
 		log.info("initializeButton clicked");
 		List<Benutzer> user = null;
-		try {
-			user = MainController.manageUsersDAO.allUsers();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		user = MainController.manageUsersDAO.allUsers();
 		List<Termin> TerminXL = null;
 		try {
 			TerminXL = MainController.manageTermineDAO.allTermine();
@@ -163,28 +202,32 @@ public class MainController implements Initializable {
 	
 	}
 	
-	@FXML
-	public void initializeTermineButton(ActionEvent event) {
-//		Image image = new Image(getClass().getResourceAsStream)
-		log.info("initializeTermine Button clicked");
-		List<Termin> TerminXL = null;
-		try {
-			TerminXL = MainController.manageTermineDAO.allTermine();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		ObservableList<Termin> terminList = FXCollections.observableArrayList();
-		terminList = FXCollections.observableArrayList(TerminXL);
-		terminTbl.setItems(terminList);
-		idT.setCellValueFactory(cellData -> cellData.getValue().convertIdT());
-		kategorie.setCellValueFactory(cellData -> cellData.getValue().getKategorie());
-		kommentar.setCellValueFactory(cellData -> cellData.getValue().getKategorie());
-		von.setCellValueFactory(cellData -> cellData.getValue().getVon());
-		bis.setCellValueFactory(cellData -> cellData.getValue().getBis());
-		userNameT.setCellValueFactory(cellData -> cellData.getValue().getUserNameT());
-		referat.setCellValueFactory(cellData -> cellData.getValue().getReferat());
-	}
+	
+	
+	
+	//Initialize Termine Button durch Refresh Button ersetzt amk
+//	@FXML
+//	public void initializeTermineButton(ActionEvent event) {
+////		Image image = new Image(getClass().getResourceAsStream)
+//		log.info("initializeTermine Button clicked");
+//		List<Termin> TerminXL = null;
+//		try {
+//			TerminXL = MainController.manageTermineDAO.allTermine();
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		ObservableList<Termin> terminList = FXCollections.observableArrayList();
+//		terminList = FXCollections.observableArrayList(TerminXL);
+//		terminTbl.setItems(terminList);
+//		idT.setCellValueFactory(cellData -> cellData.getValue().convertIdT());
+//		kategorie.setCellValueFactory(cellData -> cellData.getValue().getKategorie());
+//		kommentar.setCellValueFactory(cellData -> cellData.getValue().getKategorie());
+//		von.setCellValueFactory(cellData -> cellData.getValue().getVon());
+//		bis.setCellValueFactory(cellData -> cellData.getValue().getBis());
+//		userNameT.setCellValueFactory(cellData -> cellData.getValue().getUserNameT());
+//		referat.setCellValueFactory(cellData -> cellData.getValue().getReferat());
+//	}
 	@FXML
 	
 	public void addUserButton(ActionEvent event) {
@@ -211,11 +254,12 @@ public class MainController implements Initializable {
 		int selectedIndexDelete = userTbl.getSelectionModel().getSelectedIndex();
 		userTbl.getItems().remove(selectedIndexDelete);
 		MainController.manageUsersDAO.deleteUser(user);
+		log.info("deleted from db");
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Benutzer löschen");
 		alert.setHeaderText("Benutzer wurde gelöscht!");
 		alert.setContentText("Der Benutzer wurde erfolgreich gelöscht." );
-
+		
 		alert.showAndWait();
 		log.info("Benutzer erfolgreich gelöscht");
 	}
@@ -275,7 +319,7 @@ public class MainController implements Initializable {
 
 		alert.showAndWait();
 		log.info("Termin erfolgreich gelöscht");
-	
+		
 	}
 	//Einstellungen Buttons & Code
 	
@@ -304,12 +348,7 @@ public class MainController implements Initializable {
 			e.printStackTrace();
 		}
 		List<Benutzer> user = null;
-		try {
-			user = MainController.manageUsersDAO.allUsers();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		user = MainController.manageUsersDAO.allUsers();
 		ObservableList<Termin> terminList = FXCollections.observableArrayList();
 		terminList = FXCollections.observableArrayList(TerminXL);
 		terminTbl.setItems(terminList);

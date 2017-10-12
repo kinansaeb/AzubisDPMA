@@ -2,6 +2,7 @@ package de.dpma.azubidpma.dao;
 
 import de.dpma.azubidpma.AzubiMain;
 import de.dpma.azubidpma.model.Termin;
+import de.dpma.azubidpma.view.MainController;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,7 +20,6 @@ public class TerminDAO {
 	final String SELECT_ALL_TERMINE = "SELECT * FROM KISAEB.TERMINE";
 	final String ADD_TERMIN = "INSERT INTO KISAEB.TERMINE (ID, BENUTZER_ID, NAME, KOMMENTAR, KATEGORIE, VON, BIS, REFERAT) VALUES(TERMIN_SEQUENCE.nextVal, ?, ?, ?, ?, ?, ?, ?)";
 	final String DELETE_TERMIN = "DELETE FROM KISAEB.TERMINE WHERE ID = ?";
-	
 	
 	private final Connection con;
 
@@ -67,11 +67,14 @@ public class TerminDAO {
 		try {
 
 			PreparedStatement stat = con.prepareStatement(ADD_TERMIN);
-			stat.setInt(1, terminXL.getIdT().getValue());
+			stat.setInt(1, terminXL.getUserID().getValue());
 			stat.setString(2, terminXL.getUserNameT().getValue());
-			stat.setString(3, terminXL.getKategorie().getValue());
-			stat.setString(4, terminXL.getKommentar().getValue());
-			stat.setString(5, terminXL.getReferat().getValue());
+			stat.setString(3, terminXL.getKommentar().getValue());
+			stat.setString(4, terminXL.getKategorie().getValue());
+			//TODO von und bis in einen Datum umwandeln um es in die Datenbank einzuspeichern
+			stat.setString(5, terminXL.getVon().getValue());
+			stat.setString(6, terminXL.getBis().getValue());
+			stat.setString(7, terminXL.getReferat().getValue());
 
 			stat.executeUpdate();
 			log.info("Neuer Termin angelegt");
