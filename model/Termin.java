@@ -144,7 +144,7 @@ public void setUserID(IntegerProperty userID) {
 }
 
 public IntegerProperty getUserIDByName() {
-	return MainController.manageUsersDAO.getUserByName(getUserNameT().getValue()).getId();
+		return MainController.manageUsersDAO.getUserByName(getUserNameT().getValue()).getId();
 }
 
 //public String getUserName() {

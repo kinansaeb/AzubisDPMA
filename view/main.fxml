@@ -78,13 +78,13 @@
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                  <children>
                                     <Button layoutX="15.0" layoutY="159.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="190.0" text="Suchen" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="14.0" />
-                                    <Button layoutX="16.0" layoutY="339.0" mnemonicParsing="false" onAction="#editUserButton" prefHeight="31.0" prefWidth="190.0" text="Ändern" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="13.0" />
+                                    <Button layoutX="15.0" layoutY="449.0" mnemonicParsing="false" onAction="#editUserButton" prefHeight="31.0" prefWidth="190.0" text="Ändern" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="14.0" />
                                     <TextField fx:id="benutzerSuchfeld" layoutX="14.0" layoutY="27.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="13.0" />
                                     <ComboBox fx:id="ausbildungsjahr" layoutX="12.0" layoutY="72.0" prefHeight="31.0" prefWidth="191.0" promptText="Ausbildungsjahr" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="13.0" />
                                     <ComboBox fx:id="berufsbild" layoutX="13.0" layoutY="113.0" prefHeight="31.0" prefWidth="189.0" promptText="Berufsbild" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="13.0" />
-                                    <Button layoutX="16.0" layoutY="412.0" mnemonicParsing="false" onAction="#deleteUserButton" prefHeight="31.0" prefWidth="186.0" text="Löschen" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="13.0" />
+                                    <Button layoutX="14.0" layoutY="508.0" mnemonicParsing="false" onAction="#deleteUserButton" prefHeight="31.0" prefWidth="186.0" text="Löschen" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="15.0" />
                                     <Text layoutX="14.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Benutzer suchen:" />
-                                    <Button layoutX="15.0" layoutY="497.0" mnemonicParsing="false" onAction="#addUserButton" prefHeight="31.0" prefWidth="126.0" text="Benutzer hinzufügen" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="14.0" />
+                                    <Button layoutX="15.0" layoutY="392.0" mnemonicParsing="false" onAction="#addUserButton" prefHeight="31.0" prefWidth="126.0" text="Benutzer hinzufügen" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="14.0" />
                                  </children>
                               </AnchorPane>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
@@ -145,8 +145,8 @@
             <Image url="@../lib/connection%20icon.png" />
          </image>
       </ImageView>
-      <Button layoutX="-6.0" layoutY="41.0" mnemonicParsing="false" onAction="#refreshButton" opacity="0.4" prefHeight="41.0" prefWidth="41.0" AnchorPane.rightAnchor="965.0" />
+      <Button layoutX="-13.0" layoutY="46.0" mnemonicParsing="false" onAction="#refreshButton" opacity="0.4" prefHeight="3.0" prefWidth="29.0" AnchorPane.rightAnchor="981.0" />
       <Line endX="100.0" layoutX="-68.0" layoutY="-84.0" startX="100.0" startY="700.0" />
-      <Button layoutX="-6.0" layoutY="113.0" mnemonicParsing="false" onAction="#testConnectionButton" opacity="0.4" prefHeight="41.0" prefWidth="41.0" AnchorPane.rightAnchor="965.0" />
+      <Button layoutY="118.0" mnemonicParsing="false" onAction="#testConnectionButton" opacity="0.4" prefHeight="3.0" prefWidth="29.0" />
    </children>
 </AnchorPane>

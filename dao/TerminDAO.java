@@ -24,7 +24,7 @@ public class TerminDAO {
 	final String SELECT_ALL_TERMINE = "SELECT * FROM KISAEB.TERMINE";
 	final String ADD_TERMIN = "INSERT INTO KISAEB.TERMINE (ID, BENUTZER_ID, NAME, KOMMENTAR, KATEGORIE, VON, BIS, REFERAT) VALUES(TERMIN_SEQUENCE.nextVal, ?, ?, ?, ?, ?, ?, ?)";
 	final String DELETE_TERMIN = "DELETE FROM KISAEB.TERMINE WHERE ID = ?";
-	
+
 	private final Connection con;
 
 	public TerminDAO(Connection con) {
@@ -66,18 +66,19 @@ public class TerminDAO {
 		return terminXL;
 
 	}
+
 	public java.sql.Date convertJDtoSQLD(java.util.Date date) {
-	    return new java.sql.Date(date.getTime());
+		return new java.sql.Date(date.getTime());
 	}
-public static java.sql.Date convertFromJAVADateToSQLDate(java.util.Date javaDate) {
-java.sql.Date sqlDate = null;
-if (javaDate != null) {
-	sqlDate = new Date(javaDate.getTime());
-	
-}
-	return sqlDate;
-}
-	
+
+	public static java.sql.Date convertFromJAVADateToSQLDate(java.util.Date javaDate) {
+		java.sql.Date sqlDate = null;
+		if (javaDate != null) {
+			sqlDate = new Date(javaDate.getTime());
+
+		}
+		return sqlDate;
+	}
 
 	public void addTermin(Termin terminXL) throws ParseException {
 		try {
@@ -87,19 +88,22 @@ if (javaDate != null) {
 			stat.setString(2, terminXL.getUserNameT().getValue());
 			stat.setString(3, terminXL.getKommentar().getValue());
 			stat.setString(4, terminXL.getKategorie().getValue());
-			//TODO von und bis in einen Datum umwandeln um es in die Datenbank einzuspeichern
-			
+			// TODO von und bis in einen Datum umwandeln um es in die Datenbank
+			// einzuspeichern
+
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-DD");
-			
+
 			Date datumVon = Date.valueOf(terminXL.getVon().getValue());
 			Date datumBis = Date.valueOf(terminXL.getBis().getValue());
-//			Date datumVon = (Date) simpleDateFormat.parse(terminXL.getVon().getValue());
-//			Date datumBis = (Date) simpleDateFormat.parse(terminXL.getBis().getValue());
-//			convertJDtoSQLD(datumVon);
-//			convertJDtoSQLD(datumBis);
-		
-//			convertFromJAVADateToSQLDate(datumVon);
-//			convertFromJAVADateToSQLDate(datumBis);
+			// Date datumVon = (Date)
+			// simpleDateFormat.parse(terminXL.getVon().getValue());
+			// Date datumBis = (Date)
+			// simpleDateFormat.parse(terminXL.getBis().getValue());
+			// convertJDtoSQLD(datumVon);
+			// convertJDtoSQLD(datumBis);
+
+			// convertFromJAVADateToSQLDate(datumVon);
+			// convertFromJAVADateToSQLDate(datumBis);
 			stat.setDate(5, datumVon);
 			stat.setDate(6, datumBis);
 			stat.setString(7, terminXL.getReferat().getValue());
