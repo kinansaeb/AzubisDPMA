@@ -5,10 +5,14 @@ import de.dpma.azubidpma.model.Termin;
 import de.dpma.azubidpma.view.MainController;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.*;
@@ -62,8 +66,20 @@ public class TerminDAO {
 		return terminXL;
 
 	}
+	public java.sql.Date convertJDtoSQLD(java.util.Date date) {
+	    return new java.sql.Date(date.getTime());
+	}
+public static java.sql.Date convertFromJAVADateToSQLDate(java.util.Date javaDate) {
+java.sql.Date sqlDate = null;
+if (javaDate != null) {
+	sqlDate = new Date(javaDate.getTime());
+	
+}
+	return sqlDate;
+}
+	
 
-	public void addTermin(Termin terminXL) {
+	public void addTermin(Termin terminXL) throws ParseException {
 		try {
 
 			PreparedStatement stat = con.prepareStatement(ADD_TERMIN);
@@ -72,11 +88,24 @@ public class TerminDAO {
 			stat.setString(3, terminXL.getKommentar().getValue());
 			stat.setString(4, terminXL.getKategorie().getValue());
 			//TODO von und bis in einen Datum umwandeln um es in die Datenbank einzuspeichern
-			stat.setString(5, terminXL.getVon().getValue());
-			stat.setString(6, terminXL.getBis().getValue());
+			
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-DD");
+			
+			Date datumVon = Date.valueOf(terminXL.getVon().getValue());
+			Date datumBis = Date.valueOf(terminXL.getBis().getValue());
+//			Date datumVon = (Date) simpleDateFormat.parse(terminXL.getVon().getValue());
+//			Date datumBis = (Date) simpleDateFormat.parse(terminXL.getBis().getValue());
+//			convertJDtoSQLD(datumVon);
+//			convertJDtoSQLD(datumBis);
+		
+//			convertFromJAVADateToSQLDate(datumVon);
+//			convertFromJAVADateToSQLDate(datumBis);
+			stat.setDate(5, datumVon);
+			stat.setDate(6, datumBis);
 			stat.setString(7, terminXL.getReferat().getValue());
 
 			stat.executeUpdate();
+			con.commit();
 			log.info("Neuer Termin angelegt");
 
 		} catch (SQLException e) {

@@ -57,9 +57,11 @@ public void abbortButton(ActionEvent event) {
 
 @FXML
 public void saveButton(ActionEvent event) {
+	
 	user.setName(name.getText());
 	user.setAusbildungsjahr(Integer.parseInt(ausbildungsjahr.getValue().toString()));
 	user.setBerufsbild(berufsbild.getValue().toString());
+	
 	MainController.manageUsersDAO.editUser(user);
 
 	((Stage)(((Button)event.getSource()).getScene().getWindow())).close();

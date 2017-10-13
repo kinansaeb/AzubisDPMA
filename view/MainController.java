@@ -28,6 +28,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -92,6 +93,10 @@ public class MainController implements Initializable {
 	@FXML
 	private TableColumn<Termin, String> referat = new TableColumn<Termin, String>();
 
+
+	
+
+	
 	
 	@FXML
 	public void refreshButton(ActionEvent event) {
@@ -128,7 +133,7 @@ public class MainController implements Initializable {
 		terminTbl.setItems(terminList);
 		idT.setCellValueFactory(cellData -> cellData.getValue().convertIdT());
 		kategorie.setCellValueFactory(cellData -> cellData.getValue().getKategorie());
-		kommentar.setCellValueFactory(cellData -> cellData.getValue().getKategorie());
+		kommentar.setCellValueFactory(cellData -> cellData.getValue().getKommentar());
 		von.setCellValueFactory(cellData -> cellData.getValue().getVon());
 		bis.setCellValueFactory(cellData -> cellData.getValue().getBis());
 		userNameT.setCellValueFactory(cellData -> cellData.getValue().getUserNameT());
@@ -369,7 +374,18 @@ public class MainController implements Initializable {
 		berufsJahr.setCellValueFactory(cellData -> cellData.getValue().convertAj());
 		berufsGruppe.setCellValueFactory(cellData -> cellData.getValue().getBerufsbild());
 		
-}
+	}
+		
+		//Methode fürs öffnen eines Dialogs bei Doppel-Click of Table Column
+		@FXML
+		public void doubleClickAction(URL location, ResourceBundle resources) {
+			log.info("double click on row detected");
+			Termin terminXL = terminTbl.getSelectionModel().getSelectedItem();
+			int selectedIndexDouble = terminTbl.getSelectionModel().getSelectedIndex();
+			System.out.println(selectedIndexDouble);
+		}
+		
+
 			//Listen für ComboBoxen für Termine & Benutzer
 	@FXML
 	public ComboBox<String> berufsbild1;

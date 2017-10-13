@@ -58,6 +58,9 @@
                                           <TableColumn fx:id="kommentar" prefWidth="131.0" text="Kommentar" />
                                           <TableColumn fx:id="referat" prefWidth="105.0" text="Referat" />
                                       </columns>
+                                       <columnResizePolicy>
+                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                       </columnResizePolicy>
                                     </TableView>
                                  </children>
                               </AnchorPane>
@@ -93,6 +96,9 @@
                                           <TableColumn fx:id="berufsGruppe" prefWidth="145.0" text="Berufsbild" />
                                           <TableColumn fx:id="berufsJahr" prefWidth="215.0" text="Ausbildungsjahr" />
                                       </columns>
+                                       <columnResizePolicy>
+                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                       </columnResizePolicy>
                                     </TableView>
                                  </children>
                               </AnchorPane>
@@ -139,8 +145,8 @@
             <Image url="@../lib/connection%20icon.png" />
          </image>
       </ImageView>
-      <Button layoutX="-6.0" layoutY="41.0" mnemonicParsing="false" onAction="#refreshButton" opacity="0.0" prefHeight="41.0" prefWidth="41.0" />
+      <Button layoutX="-6.0" layoutY="41.0" mnemonicParsing="false" onAction="#refreshButton" opacity="0.4" prefHeight="41.0" prefWidth="41.0" AnchorPane.rightAnchor="965.0" />
       <Line endX="100.0" layoutX="-68.0" layoutY="-84.0" startX="100.0" startY="700.0" />
-      <Button layoutX="-6.0" layoutY="113.0" mnemonicParsing="false" onAction="#testConnectionButton" opacity="0.0" prefHeight="41.0" prefWidth="41.0" />
+      <Button layoutX="-6.0" layoutY="113.0" mnemonicParsing="false" onAction="#testConnectionButton" opacity="0.4" prefHeight="41.0" prefWidth="41.0" AnchorPane.rightAnchor="965.0" />
    </children>
 </AnchorPane>

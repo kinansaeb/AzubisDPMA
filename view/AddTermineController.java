@@ -2,6 +2,7 @@ package de.dpma.azubidpma.view;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
@@ -66,21 +67,25 @@ public void initialize(URL location, ResourceBundle resources) {
 }
 
 @FXML
-public void saveButton(ActionEvent event) {
+public void saveButton(ActionEvent event) throws ParseException {
 	Termin terminXL = new Termin();
+	
 	terminXL.setUserNameT(userComboBox.getSelectionModel().getSelectedItem().toString());
+	terminXL.setUserID(terminXL.getUserIDByName());
 	terminXL.setReferat(referat.getText());
 	terminXL.setKategorie(kategorie.getSelectionModel().getSelectedItem().toString());
 	terminXL.setVon(von.getValue().toString());
 	terminXL.setBis(bis.getValue().toString());
 	terminXL.setKommentar(kommentar.getText());
+	
 	try {
 		MainController.manageTermineDAO.addTermin(terminXL);
 		List<Termin> lastTermin = MainController.manageTermineDAO.allTermine();
 	} catch (SQLException e) {
 		e.printStackTrace();
 	}
-	
+	((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+	AzubiMain.getMainController().refreshButton(event);
 }
 @FXML
 public void abortButton(ActionEvent event) {

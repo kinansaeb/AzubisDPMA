@@ -20,8 +20,9 @@ public class UsersDAO {
 	final String SELECT_ALL_USERS = "SELECT * FROM KISAEB.BENUTZER"; // <---- Statement muss geändert werden
 	final String ADD_USER = "INSERT INTO KISAEB.BENUTZER (ID, NAME, BERUFSBILD, AUSBILDUNGSJAHR) VALUES(BENUTZER_SEQUENCE.nextVal, ?, ?, ?)";
 	final String DELETE_USER = "DELETE FROM KISAEB.BENUTZER WHERE ID = ?";
-	final String ALTER_USER = "UPDATE KISAEB.BENUTZER SET (NAME, BERUFSBILD, AUSBILDUNGSJAHR) VALUES(?, ?, ?) WHERE ID = ?";
-	final String GET_USERNAME_BY_ID = "SELECT ID FROM KISAEB.BENUTZER WHERE BENUTZER_ID = ?";
+	final String ALTER_USER = "UPDATE KISAEB.BENUTZER SET NAME = ?, BERUFSBILD = ?, AUSBILDUNGSJAHR = ? WHERE ID = ?";
+	final String GET_USER_BY_ID = "SELECT * FROM KISAEB.BENUTZER WHERE ID = ?";
+	final String GET_USER_BY_NAME = "SELECT * FROM KISAEB.BENUTZER WHERE NAME = ?";
 //	
 	
 	
@@ -40,14 +41,35 @@ public UsersDAO(Connection con) {
 	this.con = con;
 }
 
-public Benutzer getUser(int userID) {
+public Benutzer getUserByID(int userID) {
 	PreparedStatement stat = null;
 	Benutzer benutzer = new Benutzer();
 	try {
-		stat = con.prepareStatement(GET_USERNAME_BY_ID);
+		stat = con.prepareStatement(GET_USER_BY_ID);
 		stat.setInt(1, userID);
 		ResultSet result = stat.executeQuery();
 		benutzer.setBerufsbild(result.getString("berufsbild"));
+		benutzer.setAusbildungsjahr(result.getInt("ausbildungsjahr"));
+		benutzer.setId(result.getInt("id"));
+		benutzer.setName(result.getString("name"));
+		return benutzer;
+	} catch (SQLException e) {
+		e.printStackTrace();
+	} finally {
+		DbUtils.closeQuietly(stat);
+	}
+	return null;
+	
+}
+public Benutzer getUserByName(String userName) {
+	PreparedStatement stat = null;
+	Benutzer benutzer = new Benutzer();
+	try {
+		stat = con.prepareStatement(GET_USER_BY_NAME);
+		stat.setString(1, userName);
+		ResultSet result = stat.executeQuery();
+		result.next();
+		benutzer.setBerufsbild(result.getString("BERUFSBILD"));
 		benutzer.setAusbildungsjahr(result.getInt("ausbildungsjahr"));
 		benutzer.setId(result.getInt("id"));
 		benutzer.setName(result.getString("name"));
@@ -91,6 +113,7 @@ public void addUser(Benutzer user) {
 		stat.setString(2, user.getBerufsbild().getValue());
 		stat.setInt(3, user.getAusbildungsjahr().getValue());
 		stat.executeUpdate();
+		con.commit();
 		log.info("Neuer Benutzer angelegt");
 		
 		
@@ -119,6 +142,8 @@ public void editUser(Benutzer user) {
 		stat.setString(2, user.getBerufsbild().getValue());
 		stat.setInt(3, user.getAusbildungsjahr().getValue());
 		stat.setInt(4, user.getId().getValue());
+		stat.executeUpdate();
+		con.commit();
 		log.info("Benutzer Informationen geändert");
 	} catch (SQLException e) {
 		e.printStackTrace();

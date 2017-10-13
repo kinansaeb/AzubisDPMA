@@ -82,7 +82,7 @@ public void saveButton(ActionEvent event) {
 	alert.setContentText("Der Benutzer '" +  name + "' wurde angelegt");
 
 	alert.showAndWait();
-	AzubiMain.getMainController().initializeButton(event);
+	AzubiMain.getMainController().refreshButton(event);
 }
 
 }
