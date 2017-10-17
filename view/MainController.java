@@ -10,6 +10,7 @@ import de.dpma.azubidpma.*;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -189,7 +190,6 @@ public class MainController implements Initializable {
 		try {
 			TerminXL = MainController.manageTermineDAO.allTermine();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -209,12 +209,25 @@ public class MainController implements Initializable {
 	public void massImportButton(ActionEvent event) {
 		log.info("massImportButton clicked");
 		con = AzubiMain.getCon();
-		Statement stmt = null;
 		String query = importArea.getText();
+		String[] moreQuerys = null;
+		if (query.contains(";")){
+			moreQuerys = query.split(";");
+		}
 		try {
-			stmt = con.prepareStatement(query);
-			ResultSet rs = stmt.executeQuery(query);
-			System.out.println(rs);
+			PreparedStatement stmt = null;
+			if (moreQuerys == null || moreQuerys.length == 0 || moreQuerys[0].isEmpty()){
+			 stmt = con.prepareStatement(query);
+			 stmt.executeUpdate();
+			 con.commit();
+			}
+			else{
+				for (int i = 0; i < moreQuerys.length; i++){
+					 stmt = con.prepareStatement(moreQuerys[i]);
+					 stmt.executeUpdate();
+					 con.commit();
+				}
+			}
 		} catch (SQLException e) {
 			log.info("massImport SQL Exception...");
 			Alert alert = new Alert(AlertType.INFORMATION);
@@ -226,33 +239,6 @@ public class MainController implements Initializable {
 			
 	}
 
-	// Initialize Termine Button durch Refresh Button ersetzt 
-	// @FXML
-	// public void initializeTermineButton(ActionEvent event) {
-	//// Image image = new Image(getClass().getResourceAsStream)
-	// log.info("initializeTermine Button clicked");
-	// List<Termin> TerminXL = null;
-	// try {
-	// TerminXL = MainController.manageTermineDAO.allTermine();
-	// } catch (SQLException e) {
-	// // TODO Auto-generated catch block
-	// e.printStackTrace();
-	// }
-	// ObservableList<Termin> terminList = FXCollections.observableArrayList();
-	// terminList = FXCollections.observableArrayList(TerminXL);
-	// terminTbl.setItems(terminList);
-	// idT.setCellValueFactory(cellData -> cellData.getValue().convertIdT());
-	// kategorie.setCellValueFactory(cellData ->
-	// cellData.getValue().getKategorie());
-	// kommentar.setCellValueFactory(cellData ->
-	// cellData.getValue().getKategorie());
-	// von.setCellValueFactory(cellData -> cellData.getValue().getVon());
-	// bis.setCellValueFactory(cellData -> cellData.getValue().getBis());
-	// userNameT.setCellValueFactory(cellData ->
-	// cellData.getValue().getUserNameT());
-	// referat.setCellValueFactory(cellData ->
-	// cellData.getValue().getReferat());
-	// }
 	@FXML
 
 	public void addUserButton(ActionEvent event) {
