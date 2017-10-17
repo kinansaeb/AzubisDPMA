@@ -19,6 +19,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.Labeled;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -37,6 +38,8 @@ public class AddTermineController implements Initializable {
 	private DatePicker bis = new DatePicker();
 	@FXML
 	private TextArea kommentar = new TextArea();
+	@FXML
+	private Label idLabel = new Label();
 
 	@FXML
 	public ComboBox<String> kategorie;
@@ -47,6 +50,8 @@ public class AddTermineController implements Initializable {
 	public ComboBox<String> userComboBox;
 	List<Benutzer> userListe = MainController.manageUsersDAO.allUsers();
 
+	
+	
 	@FXML
 
 	public void initialize(URL location, ResourceBundle resources) {
@@ -54,13 +59,14 @@ public class AddTermineController implements Initializable {
 		kategorie.setItems(kategorie1List);
 		von.setPromptText("Datum-Von");
 		bis.setPromptText("Datum-Bis");
+		
 		UsersDAO usersDao = MainController.manageUsersDAO;
 		ObservableList<String> userComboBoxList = FXCollections.observableArrayList();
 		for (int i = 0; i < userListe.size(); i++) {
 			// usersDao.getBenutzerListe(); //<----
 			// userComboBox.setItems(userListe);
 			userComboBoxList
-					.add(/* userListe.get(i).getId().getValue() + " | " + */userListe.get(i).getName().getValue());
+					.add( userListe.get(i).getName().getValue());
 		}
 		userComboBox.setItems(userComboBoxList);
 	}

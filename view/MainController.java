@@ -16,6 +16,7 @@ import java.sql.Statement;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
+import java.sql.Connection;
 
 import javafx.stage.Stage;
 import javafx.collections.FXCollections;
@@ -41,9 +42,9 @@ public class MainController implements Initializable {
 	AzubiMain azb = new AzubiMain();
 
 	public static Stage stage;
-
+	
 	public String sqlImportQuery;
-
+	public static Connection con;
 	public static UsersDAO manageUsersDAO = new UsersDAO(AzubiMain.getCon());
 	public static TerminDAO manageTermineDAO = new TerminDAO(AzubiMain.getCon());
 
@@ -94,6 +95,8 @@ public class MainController implements Initializable {
 	@FXML
 	private TextArea massImportArea = new TextArea();
 
+	
+	
 	@FXML
 	public void refreshButton(ActionEvent event) {
 
@@ -200,8 +203,30 @@ public class MainController implements Initializable {
 		log.info("Benutzer hinzugefügt");
 
 	}
+	
 
-	// Initialize Termine Button durch Refresh Button ersetzt amk
+	@FXML
+	public void massImportButton(ActionEvent event) {
+		log.info("massImportButton clicked");
+		con = AzubiMain.getCon();
+		Statement stmt = null;
+		String query = importArea.getText();
+		try {
+			stmt = con.prepareStatement(query);
+			ResultSet rs = stmt.executeQuery(query);
+			System.out.println(rs);
+		} catch (SQLException e) {
+			log.info("massImport SQL Exception...");
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("SQL Error");
+			alert.setHeaderText("There was an error!");
+			alert.setContentText("There was an error! Check your SQL syntax or refresh database connection.");
+			alert.showAndWait();
+		}
+			
+	}
+
+	// Initialize Termine Button durch Refresh Button ersetzt 
 	// @FXML
 	// public void initializeTermineButton(ActionEvent event) {
 	//// Image image = new Image(getClass().getResourceAsStream)
@@ -282,13 +307,14 @@ public class MainController implements Initializable {
 			editUserController euc = fxmlLoader.getController();
 			euc.setUser(user);
 			int selectedIndexEdit = userTbl.getSelectionModel().getSelectedIndex();
-
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		// Termine Buttons & Code
 	}
+		
+
 
 	@FXML
 	public void addTermineButton(ActionEvent event) {
@@ -325,11 +351,7 @@ public class MainController implements Initializable {
 	}
 	// Einstellungen Buttons & Code
 
-	@FXML
-	public void importButton(ActionEvent event) {
-		sqlImportQuery = importArea.getText();
 
-	}
 
 	// Initialize Code zum setzen der ComboBox Items und Tabellen Items
 	public void initialize(URL location, ResourceBundle resources) {
@@ -365,15 +387,6 @@ public class MainController implements Initializable {
 		berufsJahr.setCellValueFactory(cellData -> cellData.getValue().convertAj());
 		berufsGruppe.setCellValueFactory(cellData -> cellData.getValue().getBerufsbild());
 
-	}
-
-	// Methode fürs öffnen eines Dialogs bei Doppel-Click of Table Column
-	@FXML
-	public void doubleClickAction(URL location, ResourceBundle resources) {
-		log.info("double click on row detected");
-		Termin terminXL = terminTbl.getSelectionModel().getSelectedItem();
-		int selectedIndexDouble = terminTbl.getSelectionModel().getSelectedIndex();
-		System.out.println(selectedIndexDouble);
 	}
 
 	// Listen für ComboBoxen für Termine & Benutzer

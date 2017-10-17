@@ -131,7 +131,9 @@ public class UsersDAO {
 		}
 
 	}
-
+	
+	
+	
 	public void deleteUser(Benutzer user) throws SQLException {
 		try {
 			PreparedStatement stat = con.prepareStatement(DELETE_USER);

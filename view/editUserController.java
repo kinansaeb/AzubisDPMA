@@ -31,9 +31,9 @@ public class editUserController implements Initializable {
 	private ComboBox berufsbild = new ComboBox();
 	@FXML
 	private ComboBox ausbildungsjahr = new ComboBox();
-
+	
 	@FXML
-	public ComboBox<String> berufsbild1;
+		public ComboBox<String> berufsbild1;
 	ObservableList<String> berufsbildList = FXCollections.observableArrayList("IT", "KFB", "VFA", "FAMI", "Schreiner",
 			"Elektroniker");
 
@@ -58,7 +58,6 @@ public class editUserController implements Initializable {
 
 	@FXML
 	public void saveButton(ActionEvent event) {
-
 		user.setName(name.getText());
 		user.setAusbildungsjahr(Integer.parseInt(ausbildungsjahr.getValue().toString()));
 		user.setBerufsbild(berufsbild.getValue().toString());
