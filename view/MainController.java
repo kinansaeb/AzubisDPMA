@@ -9,6 +9,7 @@ import de.dpma.azubidpma.model.Termin;
 import de.dpma.azubidpma.*;
 
 import java.io.File;
+import java.io.Writer;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -109,6 +110,7 @@ public class MainController implements Initializable {
 	private CheckBox terminBox = new CheckBox();
 	@FXML
 	private CheckBox userBox = new CheckBox();
+	private Object data;
 	
 	
 	
@@ -131,8 +133,23 @@ public class MainController implements Initializable {
 	@FXML
 	public void exportButton(ActionEvent event) {
 		log.info("exportButton clicked");
+		Writer writer = null;
+		try {
+			File file = new File(filePathField.getText()+" v");
 		
-	
+			for (Benutzer benutzer : data) {
+				String text = benutzer.getId() + "," + benutzer.getName() + "," + benutzer.getBerufsbild() + "," + benutzer.getAusbildungsjahr() + "\n";
+				writer.write(text);
+				
+			}
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			writer.flush();
+			writer.close();
+		}
+		
 	
 	}
 	
