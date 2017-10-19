@@ -23,6 +23,7 @@ import java.util.logging.Logger;
 import java.sql.Connection;
 
 import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -49,7 +50,10 @@ public class MainController implements Initializable {
 
 	public static Stage stage;
 	public String exportPath;
+	public String fileName;
 	public String sqlImportQuery;
+	public String absolutePath;
+	public String dateiFormat;
 	public static Connection con;
 	public static UsersDAO manageUsersDAO = new UsersDAO(AzubiMain.getCon());
 	public static TerminDAO manageTermineDAO = new TerminDAO(AzubiMain.getCon());
@@ -107,10 +111,12 @@ public class MainController implements Initializable {
 	@FXML
 	private TextField filePathField = new TextField();
 	@FXML
+	private TextField fileNameField = new TextField();
+	@FXML
 	private CheckBox terminBox = new CheckBox();
 	@FXML
 	private CheckBox userBox = new CheckBox();
-	private Object data;
+
 	
 	
 	
@@ -129,29 +135,24 @@ public class MainController implements Initializable {
 			
 		}
 		
+		
 	}
 	@FXML
 	public void exportButton(ActionEvent event) {
 		log.info("exportButton clicked");
-		Writer writer = null;
-		try {
-			File file = new File(filePathField.getText()+" v");
-		
-			for (Benutzer benutzer : data) {
-				String text = benutzer.getId() + "," + benutzer.getName() + "," + benutzer.getBerufsbild() + "," + benutzer.getAusbildungsjahr() + "\n";
-				writer.write(text);
-				
-			}
+		try {	
+			fileName = fileNameField.getText();
+			exportPath = filePathField.getText();
+			dateiFormat = dateiFormate.getValue().toString();
+			absolutePath = (exportPath + "" + fileName + dateiFormat);
+			System.out.println(absolutePath);
 			
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		} finally {
-			writer.flush();
-			writer.close();
-		}
-		
-	
+		} catch (Exception ex)  {
+					ex.printStackTrace();
 	}
+	}
+
+
 	
 	@FXML
 	public void refreshButton(ActionEvent event) {
