@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="445.0" prefWidth="662.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.dpma.azubidpma.view.SyntaxController">
+   <children>
+      <Button layoutX="572.0" layoutY="103.0" mnemonicParsing="false" onAction="#copyButton1" text="Copy" />
+      <Button layoutX="572.0" layoutY="220.0" mnemonicParsing="false" onAction="#copyButton2" text="Copy" />
+      <Button layoutX="27.0" layoutY="393.0" mnemonicParsing="false" onAction="#closeButton" text="Close" />
+      <Text layoutX="238.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SQL Statements">
+         <font>
+            <Font name="System Bold" size="25.0" />
+         </font>
+      </Text>
+      <Text layoutX="24.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add User" />
+      <Text layoutX="24.0" layoutY="191.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add Termin" />
+      <TextArea editable="false" layoutX="24.0" layoutY="95.0" prefHeight="31.0" prefWidth="509.0" text="INSERT INTO KISAEB.BENUTZER (ID, NAME, BERUFSBILD, AUSBILDUNGSJAHR) VALUES(BENUTZER_SEQUENCE.nextVal, 'BENUTZERNAME', 'BERUFSBILD', 1);" />
+      <TextArea editable="false" layoutX="24.0" layoutY="211.0" prefHeight="31.0" prefWidth="509.0" text="INSERT INTO KISAEB.TERMINE (ID, BENUTZER_ID, NAME, KOMMENTAR, KATEGORIE, VON, BIS, REFERAT) VALUES(TERMIN_SEQUENCE.nextVal, 100,'BENUTZERNAME ', 'KOMMENTARTEXT', 'KATEGORIE',to_date('01.01.2017', 'DD.MM.YYYY') , to_date('02.02.2017', 'DD.MM.YYYY'), '4.3.1');&#10;" />
+      <Button layoutX="572.0" layoutY="322.0" mnemonicParsing="false" onAction="#copyButton3" text="Copy" />
+      <Text layoutX="24.0" layoutY="297.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Delete User by ID" />
+      <TextArea editable="false" layoutX="24.0" layoutY="314.0" prefHeight="31.0" prefWidth="509.0" text="DELETE FROM KISAEB.BENUTZER WHERE ID IN (1,2,3,4,5);" />
+   </children>
+</AnchorPane>

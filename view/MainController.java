@@ -7,6 +7,8 @@ import de.dpma.azubidpma.dao.DbCon;
 import de.dpma.azubidpma.model.Benutzer;
 import de.dpma.azubidpma.model.Termin;
 import de.dpma.azubidpma.*;
+
+import java.io.File;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -19,6 +21,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Logger;
 import java.sql.Connection;
 
+import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -36,6 +39,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Alert.AlertType;
 
 public class MainController implements Initializable {
@@ -43,12 +47,14 @@ public class MainController implements Initializable {
 	AzubiMain azb = new AzubiMain();
 
 	public static Stage stage;
-	
+	public String exportPath;
 	public String sqlImportQuery;
 	public static Connection con;
 	public static UsersDAO manageUsersDAO = new UsersDAO(AzubiMain.getCon());
 	public static TerminDAO manageTermineDAO = new TerminDAO(AzubiMain.getCon());
-
+	
+	@FXML
+	private TextArea importResultArea = new TextArea();
 	@FXML
 	private TextArea importArea = new TextArea();
 	@FXML
@@ -67,6 +73,8 @@ public class MainController implements Initializable {
 	private ComboBox<String> ausbildungsjahrT = new ComboBox();
 	@FXML
 	private ComboBox<String> kategorieT = new ComboBox();
+	@FXML
+	private ComboBox<String> dateiFormate1 = new ComboBox();
 	@FXML
 	private TableView<Benutzer> userTbl = new TableView();
 	@FXML
@@ -95,8 +103,38 @@ public class MainController implements Initializable {
 	private TableColumn<Termin, String> referat = new TableColumn<Termin, String>();
 	@FXML
 	private TextArea massImportArea = new TextArea();
-
+	@FXML
+	private TextField filePathField = new TextField();
+	@FXML
+	private CheckBox terminBox = new CheckBox();
+	@FXML
+	private CheckBox userBox = new CheckBox();
 	
+	
+	
+	//Export Area 
+	@FXML
+	public void directoryChooserButton(ActionEvent event) {
+		log.info("directoryChooserButton clicked");
+		DirectoryChooser dC = new DirectoryChooser();
+		File sD = dC.showDialog(stage);
+		if(sD == null) {
+			filePathField.setText("No directory selected");
+		}else{
+			filePathField.setText(sD.getAbsolutePath());
+			exportPath = (sD.getAbsolutePath());
+			System.out.println(exportPath + " was choosen as export path");
+			
+		}
+		
+	}
+	@FXML
+	public void exportButton(ActionEvent event) {
+		log.info("exportButton clicked");
+		
+	
+	
+	}
 	
 	@FXML
 	public void refreshButton(ActionEvent event) {
@@ -204,37 +242,48 @@ public class MainController implements Initializable {
 
 	}
 	
-
+	@FXML
+	public void clearResultAreaButton(ActionEvent event) {
+		log.info("clearResultAreaButton clicked");
+		importResultArea.setText("");
+	}
 	@FXML
 	public void massImportButton(ActionEvent event) {
 		log.info("massImportButton clicked");
 		con = AzubiMain.getCon();
 		String query = importArea.getText();
 		String[] moreQuerys = null;
-		if (query.contains(";")){
+			if (query.contains(";")){
 			moreQuerys = query.split(";");
 		}
 		try {
 			PreparedStatement stmt = null;
 			if (moreQuerys == null || moreQuerys.length == 0 || moreQuerys[0].isEmpty()){
 			 stmt = con.prepareStatement(query);
+			 
 			 stmt.executeUpdate();
 			 con.commit();
+			 importResultArea.setText("SQL Statement was commited \n");
+
 			}
 			else{
 				for (int i = 0; i < moreQuerys.length; i++){
 					 stmt = con.prepareStatement(moreQuerys[i]);
 					 stmt.executeUpdate();
 					 con.commit();
+					 importResultArea.setText("SQL Statement was commited \n");
+					 
 				}
 			}
 		} catch (SQLException e) {
 			log.info("massImport SQL Exception...");
+			 importResultArea.setText("SQL Statement was not commited \n");
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("SQL Error");
 			alert.setHeaderText("There was an error!");
 			alert.setContentText("There was an error! Check your SQL syntax or refresh database connection.");
 			alert.showAndWait();
+			
 		}
 			
 	}
@@ -346,6 +395,7 @@ public class MainController implements Initializable {
 		berufsbildT.setItems(berufsbildTList);
 		ausbildungsjahrT.setItems(ausbildungjahrTList);
 		kategorieT.setItems(kategorieTList);
+		dateiFormate1.setItems(dateiFormateListe);
 		List<Termin> TerminXL = null;
 		try {
 			TerminXL = MainController.manageTermineDAO.allTermine();
@@ -375,7 +425,26 @@ public class MainController implements Initializable {
 
 	}
 
-	// Listen für ComboBoxen für Termine & Benutzer
+	
+	@FXML
+	public void openSyntaxButton(ActionEvent event) {
+		log.info("openSyntaxButton clicked");
+		try {
+			FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("syntax.fxml"));
+			log.info("Scene syntax.fxml wird initialisiert");
+			Parent root = (Parent) fxmlLoader.load();
+			stage = new Stage();
+			stage.setScene(new Scene(root));
+			stage.setTitle("SQL Statements");
+			stage.setResizable(false);
+			stage.show();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	// Listen für ComboBoxen für Termine & Benutzer & Export Area Dateiformate
 	@FXML
 	public ComboBox<String> berufsbild1;
 	ObservableList<String> berufsbildList = FXCollections.observableArrayList("IT", "KFB", "VFA", "FAMI", "Schreiner",
@@ -395,5 +464,11 @@ public class MainController implements Initializable {
 	public ComboBox<String> kategorieT1;
 	ObservableList<String> kategorieTList = FXCollections.observableArrayList("Krank", "Urlaub", "Fachbereich",
 			"Berufschule", "Innung");
-
+	
+	@FXML
+	public ComboBox<String> dateiFormate;
+	ObservableList<String> dateiFormateListe = FXCollections.observableArrayList("PDF", "CSV", "XLS", "txt");
+	
+	
 }
+
