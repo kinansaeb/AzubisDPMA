@@ -139,13 +139,18 @@ public class MainController implements Initializable {
 	}
 	@FXML
 	public void exportButton(ActionEvent event) {
+		
 		log.info("exportButton clicked");
 		try {	
 			fileName = fileNameField.getText();
 			exportPath = filePathField.getText();
-			dateiFormat = dateiFormate.getValue().toString();
-			absolutePath = (exportPath + "" + fileName + dateiFormat);
+			dateiFormat = dateiFormate1.getValue().toString();
+			absolutePath = (exportPath +  "\" + fileName + "." + dateiFormat);
 			System.out.println(absolutePath);
+			
+			if (dateiFormat == "XLS") {
+				
+			}
 			
 		} catch (Exception ex)  {
 					ex.printStackTrace();

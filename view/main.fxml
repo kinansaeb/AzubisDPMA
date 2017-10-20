@@ -156,7 +156,7 @@
                         <CheckBox layoutX="138.0" layoutY="212.0" mnemonicParsing="false" text="Benutzer" />
                         <Text layoutX="14.0" layoutY="259.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dateiformat auswählen:" />
                         <ComboBox fx:id="dateiFormate1" layoutX="15.0" layoutY="271.0" prefWidth="150.0" AnchorPane.leftAnchor="14.0" />
-                        <TextField layoutX="14.0" layoutY="144.0" AnchorPane.leftAnchor="14.0" />
+                        <TextField fx:id="fileNameField" layoutX="14.0" layoutY="144.0" AnchorPane.leftAnchor="14.0" />
                         <Text layoutX="14.0" layoutY="139.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dateiname (ohne Formatbezeichnung):" AnchorPane.leftAnchor="14.0" />
                         <Button layoutX="272.0" layoutY="271.0" mnemonicParsing="false" onAction="#exportButton" text="Export" />
                      </children>
